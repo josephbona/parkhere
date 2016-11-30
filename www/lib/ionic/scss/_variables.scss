@@ -16,9 +16,9 @@ $dark:                            #444 !default;
 // Base
 // -------------------------------
 
-$font-family-sans-serif:           '-apple-system', "Helvetica Neue", "Roboto", "Segoe UI", sans-serif !default;
+$font-family-sans-serif:           'Source Sans Pro', "Helvetica Neue", "Roboto", "Segoe UI", sans-serif !default;
 
-$font-family-light-sans-serif:    '-apple-system', "HelveticaNeue-Light", "Roboto-Light", "Segoe UI-Light", sans-serif-light !default;
+$font-family-light-sans-serif:    'Source Sans Pro', "HelveticaNeue-Light", "Roboto-Light", "Segoe UI-Light", sans-serif-light !default;
 $font-family-serif:               serif !default;
 $font-family-monospace:           monospace !default;
 
@@ -160,7 +160,7 @@ $button-default-active-border:    $button-stable-active-border !default;
 // Bars
 // -------------------------------
 
-$bar-height:                      44px !default;
+$bar-height:                      56px !default;
 $bar-title-font-size:             17px !default;
 $bar-padding-portrait:            5px !default;
 $bar-padding-landscape:           5px !default;
@@ -234,8 +234,8 @@ $bar-default-active-border:       $bar-light-active-border !default;
 // Tabs
 // -------------------------------
 
-$tabs-height:                     49px !default;
-$tabs-text-font-size:             14px !default;
+$tabs-height:                     48px !default;
+$tabs-text-font-size:             16px !default;
 $tabs-text-font-size-side-icon:   10px !default;
 $tabs-icon-size:                  32px !default;
 $tabs-badge-padding:              1px 6px !default;
