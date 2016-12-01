@@ -6,7 +6,8 @@
 angular
   .module('root', [
     'ionic',
-    'components'
+    'components',
+    'templates'
   ])
   .run(function($ionicPlatform) {
     $ionicPlatform.ready(function() {

@@ -20,7 +20,10 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
-@import "scss/base/fontstack";
+@import "base/fontstack";
+// body {
+//   background: #000;
+// }
 .logo {
   margin-top: 2px;
   height: 34px !important;

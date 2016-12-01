@@ -39,7 +39,7 @@ gulp.task('templates', () => {
   return gulp.src(paths.templates)
     .pipe(htmlmin({ collapseWhitespace: true }))
     .pipe(templateCache({
-      root: 'www/src/js',
+      root: 'js',
       standalone: true,
       transformUrl: function (url) {
         return url.replace(path.dirname(url), '.');
@@ -49,9 +49,8 @@ gulp.task('templates', () => {
 });
 
 gulp.task('modules', ['templates'], () => {
-  return gulp.src(paths.modules.map(item => `${root}/lib/` + item))
+  return gulp.src(paths.modules.map(item => paths.dist + 'lib/' + item))
     .pipe(concat('vendor.js'))
-    .pipe(ngAnnotate())
     .pipe(uglify())
     .pipe(gulp.dest(paths.dist + 'js/'));
 });
@@ -64,8 +63,8 @@ gulp.task('styles', () => {
 
 gulp.task('scripts', ['modules'], () => {
   return gulp.src([
-      `${root}/app/**/*.module.js`,
-      ...paths.scripts,
+      `${root}/js/**/*.module.js`,
+      paths.scripts,
       paths.dist + 'js/templates.js'
     ])
     .pipe(wrap('(function(angular){\n\'use strict\';\n<%= contents %>})(window.angular);'))
