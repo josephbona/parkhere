@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="root" ng-strict-di>
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
@@ -23,42 +23,9 @@
     <!-- your app's js -->
     <script src="js/app.js"></script>
   </head>
-  <body ng-app="parkhere">
-    <ion-pane>
-    <ion-header-bar class="bar-positive">
-    <div class="row row-center">
-      <div class="col col-50">
-        <a class="nav-toggle" href="#"><img src="images/nav.png" alt=""></a>
-        <img class="logo" src="images/logo.png" alt="">
-      </div>
-      <div class="col col-50 text-right">
-        <a href="#" class="timer"><img src="images/timer.png" alt=""></a>
-        <a href="#" class="search"><img src="images/search.png" alt=""></a>
-      </div>
-    </div>
-    </ion-header-bar>
-    <ion-tabs class="tabs-top tabs-striped tabs-color-positive">
-      <ion-tab title="Street" ui-sref="street">
-        <ion-nav-view name="street"></ion-nav-view>
-      </ion-tab>
-      <ion-tab title="Garage" ui-sref="garage">
-        <ion-nav-view name="garage"></ion-nav-view>
-      </ion-tab>
-      <ion-tab title="Private" ui-sref="private">
-        <ion-nav-view name="private"></ion-nav-view>
-      </ion-tab>
-    </ion-tabs>
-    <ion-content class="has-header has-tabs-top" padding="true">
-        <div class='list'>
-          <label class='item item-input'>
-            <input type='text' ng-model='userName' placeholder='User Name'>
-          </label>
-          <label class='item item-input'>
-            <input type='password' ng-model='password' placeholder='Password'>
-          </label>
-          <button class="button button-block button-balanced" ng-click='login()'>Login</button>
-        </div>
-    </ion-content>
-    </ion-pane>
+  <body>
+    <root>
+      <span class="loader">Loading...</span>
+    </root>
   </body>
 </html>
