@@ -1,4 +1,5 @@
 angular
   .module('components.street', [
-    'ui.router'
+    'ui.router',
+    'ngMap'
   ]);

@@ -21,7 +21,8 @@ const paths = {
   templates: `${root}/js/**/*.html`,
   modules: [
     'ionic/js/ionic.bundle.js',
-    'ionic.cloud.min.js'
+    'ionic.cloud.min.js',
+    'ngmap/build/scripts/ng-map.min.js'
   ],
   static: [
     `${root}/manifest.json`,
@@ -92,10 +93,11 @@ gulp.task('default', [
 ]);
 
 gulp.task('install', ['git-check'], function() {
-  return bower.commands.install()
+  bower.commands.install()
     .on('log', function(data) {
       gutil.log('bower', gutil.colors.cyan(data.id), data.message);
-    });
+    })
+  return gulp.src('node_modules/@ionic/cloud/dist/bundle/ionic.cloud.min.js').pipe(gulp.dest('www/lib'));
 });
 
 gulp.task('git-check', function(done) {
