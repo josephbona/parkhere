@@ -1,3 +1,12 @@
 <ion-content class="has-header has-tabs-top">
-  <ng-map center="[40.74, -74.18]"></ng-map>
+  <div class="map">
+    <ng-map
+      center="current-position"
+      geo-fallback-center="[40.74, -74.18]"
+      disable-default-u-i="true"
+      clickableIcons="false"
+      on-dragstart="$ctrl.dragStart()">
+    </ng-map>
+    <img ng-click="$ctrl.setCenter(event)" class="locate" src="images/locate.png" alt="">
+  </div>
 </ion-content>

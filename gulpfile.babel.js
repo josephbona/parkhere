@@ -1,4 +1,5 @@
 import gulp from 'gulp';
+import babel from 'gulp-babel';
 import concat from 'gulp-concat';
 import bower from 'bower';
 import wrap from 'gulp-wrap';
@@ -7,8 +8,9 @@ import htmlmin from 'gulp-htmlmin';
 import sass from 'gulp-sass';
 import ngAnnotate from 'gulp-ng-annotate';
 import templateCache from 'gulp-angular-templatecache';
-// import server from 'browser-sync';
-// import del from 'del';
+import eslint from 'gulp-eslint';
+import notify from 'gulp-notify';
+import plumber from 'gulp-plumber';
 import path from 'path';
 import gutil from 'gulp-util';
 import sh from 'shelljs';
@@ -32,17 +34,25 @@ const paths = {
   ]
 };
 
-// server.create();
-
-// gulp.task('clean', cb => del(paths.dist + '**/*', cb));
+gulp.task('lintjs', function() {
+  return gulp.src(paths.scripts)
+    .pipe(plumber({
+      errorHandler: notify.onError('Linting FAILED! Check your gulp process.')
+    }))
+    .pipe(eslint())
+    .pipe(eslint.format())
+    .pipe(eslint.failOnError());
+});
 
 gulp.task('templates', () => {
   return gulp.src(paths.templates)
-    .pipe(htmlmin({ collapseWhitespace: true }))
+    .pipe(htmlmin({
+      collapseWhitespace: true
+    }))
     .pipe(templateCache({
       root: 'js',
       standalone: true,
-      transformUrl: function (url) {
+      transformUrl: function(url) {
         return url.replace(path.dirname(url), '.');
       }
     }))
@@ -58,11 +68,16 @@ gulp.task('modules', () => {
 
 gulp.task('styles', () => {
   return gulp.src(paths.styles)
-    .pipe(sass({outputStyle: 'compressed'}))
+    .pipe(plumber({
+        errorHandler: notify.onError('SASS processing failed! Check your gulp process.')
+    }))
+    .pipe(sass({
+      outputStyle: 'compressed'
+    }))
     .pipe(gulp.dest(paths.dist + 'css/'));
 });
 
-gulp.task('scripts', ['templates'], () => {
+gulp.task('scripts', ['lintjs', 'templates'], () => {
   return gulp.src([
       `${root}/js/**/*.module.js`,
       paths.scripts,
@@ -71,14 +86,12 @@ gulp.task('scripts', ['templates'], () => {
     .pipe(wrap('(function(angular){\n\'use strict\';\n<%= contents %>})(window.angular);'))
     .pipe(concat('app.js'))
     .pipe(ngAnnotate())
+    .pipe(babel({
+      presets: ['es2015']
+    }))
     .pipe(uglify())
     .pipe(gulp.dest(paths.dist + 'js/'));
 });
-
-// gulp.task('copy', ['clean'], () => {
-//   return gulp.src(paths.static, { base: 'src' })
-//     .pipe(gulp.dest(paths.dist));
-// });
 
 gulp.task('watch', ['styles', 'modules', 'scripts'], () => {
   gulp.watch([paths.scripts, paths.templates], ['scripts']);
