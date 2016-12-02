@@ -4,6 +4,12 @@ function GarageController(NgMap, GarageService) {
   NgMap.getMap().then(function(map) {
     _map = map;
   });
+  // google.maps.event.addListenerOnce(_map, 'idle', function(){
+  //     console.log("map loaded");
+  // });
+  ctrl.$onInit = function () {
+    ctrl.results = null;
+  };
   ctrl.setCenter = function(event) {
     console.log('event', event);
     map.setCenter(event.latLng);
