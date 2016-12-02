@@ -11,8 +11,9 @@ function LoginController(AuthService, $state) {
     return AuthService
       .login(event.user)
       .then(function () {
-        $state.go('app');
-      }, function (err) {
+        $state.go('street');
+      })
+      .catch(function (err) {
         ctrl.error = err.details;
       });
   };

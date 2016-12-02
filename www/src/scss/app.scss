@@ -20,26 +20,9 @@ $ionicons-font-path: "../lib/ionic/fonts" !default;
 
 // Include all of Ionic
 @import "www/lib/ionic/scss/ionic";
+@import "base/base";
+@import "base/utils";
 @import "base/fontstack";
-// body {
-//   background: #000;
-// }
-.logo {
-  margin-top: 2px;
-  height: 34px !important;
-}
-ion-header-bar {
-  a {
-    display: inline-block;
-  }
-  img {
-    height: 30px;
-  }
-}
-
-.tabs-top {
-  text-transform: uppercase;
-}
-.tabs-striped.tabs-color-positive .tab-item {
-  color: #969696;
-}
+@import "common/app-header";
+@import "common/app-tabs";
+@import "components/auth";

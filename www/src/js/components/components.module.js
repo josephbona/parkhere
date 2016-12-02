@@ -1,4 +1,5 @@
 angular
   .module('components', [
-    'components.auth'
+    'components.auth',
+    'components.street'
   ]);

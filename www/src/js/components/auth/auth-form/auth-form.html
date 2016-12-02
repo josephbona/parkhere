@@ -1,5 +1,8 @@
-<form name="authForm" novalidate ng-submit="$ctrl.submitForm();">
-  <label>
+<div ng-if="$ctrl.error" class="message error">
+  {{ $ctrl.error }}
+</div>
+<form class="list" name="authForm" novalidate ng-submit="$ctrl.submitForm();">
+  <label class='item item-input'>
     <input
       type="email"
       name="email"
@@ -7,7 +10,7 @@
       placeholder="Enter your email"
       ng-model="$ctrl.user.email">
   </label>
-  <label>
+  <label class='item item-input'>
     <input
       type="password"
       name="password"
@@ -16,11 +19,8 @@
       ng-model="$ctrl.user.password">
   </label>
   <div class="auth-button">
-    <button class="button" type="submit" ng-disabled="authForm.$invalid">
+    <button class="button button-block button-balanced text-uppercase" type="submit">
       {{ $ctrl.button }}
     </button>
-  </div>
-  <div ng-if="$ctrl.message" class="message error">
-    {{ $ctrl.message }}
   </div>
 </form>

@@ -1,14 +1,17 @@
-<div class="auth">
-  <h1>Register</h1>
-  <auth-form
-    user="$ctrl.user"
-    message="{{ $ctrl.error }}"
-    button="Create user"
-    on-submit="$ctrl.createUser($event);">
-  </auth-form>
-</div>
-<div class="auth__info">
-  <a ui-sref="auth.login">
-    Already have an account? Login here.
-  </a>
-</div>
+<ion-content padding="true" hide-nav-bar="true">
+  <img class="logo-full" src="images/logo-full.png" alt="">
+  <div class="auth">
+    <h1>Register</h1>
+    <auth-form
+      user="$ctrl.user"
+      message="{{ $ctrl.error }}"
+      button="Create Account"
+      on-submit="$ctrl.createUser($event);">
+    </auth-form>
+  </div>
+  <div class="auth__info">
+    <a ui-sref="auth.login">
+      Already have an account? Login here.
+    </a>
+  </div>
+</ion-content>

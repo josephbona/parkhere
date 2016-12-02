@@ -17,7 +17,7 @@ const root = 'www/src/';
 const paths = {
   dist: 'www/',
   scripts: `${root}/js/**/*.js`,
-  styles: `${root}/scss/*.scss`,
+  styles: `${root}/scss/**/*.scss`,
   templates: `${root}/js/**/*.html`,
   modules: [
     'ionic/js/ionic.bundle.js',
@@ -48,7 +48,7 @@ gulp.task('templates', () => {
     .pipe(gulp.dest(paths.dist + 'js/'));
 });
 
-gulp.task('modules', ['templates'], () => {
+gulp.task('modules', () => {
   return gulp.src(paths.modules.map(item => paths.dist + 'lib/' + item))
     .pipe(concat('vendor.js'))
     .pipe(uglify())
@@ -61,7 +61,7 @@ gulp.task('styles', () => {
     .pipe(gulp.dest(paths.dist + 'css/'));
 });
 
-gulp.task('scripts', ['modules'], () => {
+gulp.task('scripts', ['templates'], () => {
   return gulp.src([
       `${root}/js/**/*.module.js`,
       paths.scripts,
@@ -79,9 +79,10 @@ gulp.task('scripts', ['modules'], () => {
 //     .pipe(gulp.dest(paths.dist));
 // });
 
-gulp.task('watch', ['styles', 'scripts'], () => {
+gulp.task('watch', ['styles', 'modules', 'scripts'], () => {
   gulp.watch([paths.scripts, paths.templates], ['scripts']);
   gulp.watch(paths.styles, ['styles']);
+  gulp.watch(paths.modules, ['modules']);
 });
 
 gulp.task('default', [

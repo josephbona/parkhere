@@ -10,6 +10,6 @@ angular
     $stateProvider
       .state('auth.register', {
         url: '/register',
-        component: 'register'
+        template: '<register></register>'
       });
   });

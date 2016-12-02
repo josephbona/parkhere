@@ -15,7 +15,7 @@ angular
       })
       .state('auth.login', {
         url: '/login',
-        component: 'login'
+        template: '<login></login>'
       });
     $urlRouterProvider.otherwise('/auth/login');
   });

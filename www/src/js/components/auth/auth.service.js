@@ -1,5 +1,5 @@
-function AuthService($firebaseAuth) {
-  var auth = $firebaseAuth();
+function AuthService($ionicAuth) {
+  var auth = $ionicAuth;
   var authData = null;
   function storeAuthData(response) {
     authData = response;
@@ -14,17 +14,17 @@ function AuthService($firebaseAuth) {
   }
   this.login = function (user) {
     return auth
-      .$signInWithEmailAndPassword(user.email, user.password)
+      .login('basic', user)
       .then(storeAuthData);
   };
-  this.register = function (user) {
+  this.signup = function (user) {
     return auth
-      .$createUserWithEmailAndPassword(user.email, user.password)
+      .signup(user)
       .then(storeAuthData);
   };
   this.logout = function () {
     return auth
-      .$signOut()
+      .logout()
       .then(clearAuthData);
   };
   this.requireAuthentication = function () {
@@ -32,7 +32,7 @@ function AuthService($firebaseAuth) {
       .$waitForSignIn().then(onSignIn);
   };
   this.isAuthenticated = function () {
-    return !!authData;
+    return auth.isAuthenticated();
   };
   this.getUser = function () {
     if (authData) {
