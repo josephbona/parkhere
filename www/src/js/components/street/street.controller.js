@@ -1,6 +1,7 @@
 function StreetController(NgMap) {
   var ctrl = this;
   var _map;
+
   NgMap.getMap().then(function(map) {
     _map = map;
   });
