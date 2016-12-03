@@ -8,20 +8,52 @@
       on-dragstart="$ctrl.dragStart()"
       on-bounds-changed="$ctrl.search()">
       <marker
-        ng-repeat="result in $ctrl.results track by $index" id="marker-{{$index}}"
+        ng-repeat="result in $ctrl.results track by $index"
+        id="marker-{{$index}}"
+        data="{{result}}"
         position="[{{result.lat}}, {{result.lng}}]"
-        on-click="$ctrl.map.showInfoWindow('bar')">
+        on-click="$ctrl.openModal()">
       </marker>
-<!--       <custom-marker ng-repeat="result in $ctrl.results track by $index"
-        id="custom-marker-{{$index}}"
-        on-click="$ctrl.map.showInfoWindow('foo', 'custom-marker-'+$index)"
-        position="{{result.pos}}">
-        <div>
-          position {{p.name}}: {{p.pos[0]}}, {{p.pos[1]}}
-        </div>
-      </custom-marker>
-      <marker position="-25.363882,131.044922" title="Hello World!"></marker> -->
     </ng-map>
     <img ng-click="$ctrl.setCenter(event)" class="locate" src="images/locate.png" alt="">
   </div>
 </ion-content>
+<script id="templates/modal.html" type="text/ng-template">
+  <ion-modal-view>
+    <ion-header-bar class="bar bar-header bar-positive">
+      <h1 class="title">{{$ctrl.selectedResult.address}} {{$ctrl.selectedResult.city}}, {{$ctrl.selectedResult.state}}</h1>
+      <button class="button button-clear button-icon icon ion-ios-close-empty" ng-click="$ctrl.closeModal()"></button>
+    </ion-header-bar>
+    <ion-content class="padding">
+      <div class="row no-padding-y">
+        <div class="col col-67">
+          <h4 class="listing-title">{{$ctrl.selectedResult.address}}<span>{{$ctrl.selectedResult.location_name}}</span></h4>
+        </div>
+        <div class="col col-33">
+          <span class="listing-price">{{$ctrl.selectedResult.price_formatted}}</span>
+        </div>
+      </div>
+      <div class="modal-map">
+        <ng-map
+          street-view="StreetViewPanorama(document.querySelector('.modal-map'), {position:new google.maps.LatLng({{$ctrl.selectedResult.lat}}, {{$ctrl.selectedResult.lng}})})">
+          <marker position="{{$ctrl.selectedResult.lat}}, {{$ctrl.selectedResult.lng}}"></marker>
+        </ng-map>
+      </div>
+      <div class="list">
+        <label class="item item-input">
+          <span class="input-label">First Name</span>
+          <input ng-model="newUser.firstName" type="text">
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Last Name</span>
+          <input ng-model="newUser.lastName" type="text">
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Email</span>
+          <input ng-model="newUser.email" type="text">
+        </label>
+        <button ng-click="$ctrl.bookGarage()" class="button button-full button-positive">Book Now</button>
+      </div>
+    </ion-content>
+  </ion-modal-view>
+</script>
