@@ -110,7 +110,6 @@ function parseTimePeriods(desc) {
     if (/EXCEPT SUNDAY/.test(desc))
         npDays = ["MON", "TUE", "WED", "THU", "FRI", "SAT"];
     if (intervalRE.test(desc)) {
-      console.log("here");
         var match = desc.match(intervalRE);
         var t0 = match[1];
         var t1 = match[9];
