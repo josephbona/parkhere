@@ -1,8 +1,8 @@
 function GarageController(NgMap, GarageService) {
   var ctrl = this;
-  var _map;
+  // var _map;
   NgMap.getMap().then(function(map) {
-    _map = map;
+    ctrl.map = map;
   });
   // google.maps.event.addListenerOnce(_map, 'idle', function(){
   //     console.log("map loaded");
@@ -12,7 +12,7 @@ function GarageController(NgMap, GarageService) {
   };
   ctrl.setCenter = function(event) {
     console.log('event', event);
-    map.setCenter(event.latLng);
+    ctrl.map.setCenter(event.latLng);
   }
   ctrl.dragStart = function(event) {
     console.log("drag started");
@@ -21,11 +21,11 @@ function GarageController(NgMap, GarageService) {
     console.log("dragging");
   }
   ctrl.search = function(event) {
-    var center = _map.getCenter().toJSON();
-    var zoom = _map.getZoom();
+    var center = ctrl.map.getCenter().toJSON();
+    var zoom = ctrl.map.getZoom();
     // console.log('center: ' + center + ' zoom: ' + zoom);
     GarageService.search(center).then(function(results) {
-      ctrl.results = results;
+      ctrl.results = results.data.parking_listings;
     })
   }
 }
