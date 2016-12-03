@@ -2,9 +2,9 @@
 # http://git-scm.com/docs/gitignore
 
 node_modules/
-platforms/
-plugins/
+ionic/platforms/
+ionic/plugins/
 
-www/css
-www/js
-www/lib
+ionic/www/css
+ionic/www/js
+ionic/www/lib

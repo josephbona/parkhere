@@ -1,0 +1,28 @@
+<ion-content class="has-header has-tabs-top">
+  <div class="map">
+    <ng-map
+      center="current-position"
+      zoom="15"
+      disable-default-u-i="true"
+      clickableIcons="false"
+      on-dragstart="$ctrl.dragStart()"
+      on-bounds-changed="$ctrl.search()">
+      <marker
+        ng-repeat="result in $ctrl.results track by $index"
+        id="marker-{{$index}}"
+        position="[{{result.lat}}, {{result.lng}}]"
+        on-click="$ctrl.map.showInfoWindow('bar')">
+      </marker>
+<!--       <custom-marker ng-repeat="result in $ctrl.results track by $index"
+        id="custom-marker-{{$index}}"
+        on-click="$ctrl.map.showInfoWindow('foo', 'custom-marker-'+$index)"
+        position="{{result.pos}}">
+        <div>
+          position {{p.name}}: {{p.pos[0]}}, {{p.pos[1]}}
+        </div>
+      </custom-marker>
+      <marker position="-25.363882,131.044922" title="Hello World!"></marker> -->
+    </ng-map>
+    <img ng-click="$ctrl.setCenter(event)" class="locate" src="images/locate.png" alt="">
+  </div>
+</ion-content>
