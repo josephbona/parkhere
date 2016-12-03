@@ -8,8 +8,7 @@
       on-dragstart="$ctrl.dragStart()"
       on-bounds-changed="$ctrl.search()">
       <marker
-        ng-repeat="result in $ctrl.results track by $index"
-        id="marker-{{$index}}"
+        ng-repeat="result in $ctrl.results track by $index" id="marker-{{$index}}"
         position="[{{result.lat}}, {{result.lng}}]"
         on-click="$ctrl.map.showInfoWindow('bar')">
       </marker>

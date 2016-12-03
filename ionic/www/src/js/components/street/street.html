@@ -5,7 +5,15 @@
       geo-fallback-center="[40.7626668, -73.9176167]"
       disable-default-u-i="true"
       clickableIcons="false"
-      on-dragstart="$ctrl.dragStart()">
+      on-dragstart="$ctrl.dragStart()"
+      on-dragend="$ctrl.dragEnd()">
+
+      <shape ng-repeat="path in $ctrl.paths track by $index" id="marker-{{$index}}" name="polyline" id="foo"
+      path="{{ path }}"
+      stroke-color="#FF0000"
+      stroke-opacity="1.0"
+      stroke-weight="3">
+      </shape>
     </ng-map>
     <img ng-click="$ctrl.setCenter(event)" class="locate" src="images/locate.png" alt="">
   </div>
