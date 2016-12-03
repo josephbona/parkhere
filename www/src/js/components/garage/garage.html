@@ -1,4 +1,5 @@
 <ion-content class="has-header has-tabs-top">
+  <div>{{$ctrl.results.data.parking_listings}}</div>
   <div class="map">
     <ng-map
       center="[40.758896, -73.985130]"
@@ -6,8 +7,8 @@
       disable-default-u-i="true"
       clickableIcons="false"
       on-dragstart="$ctrl.dragStart()"
-      on-bounds_changed="$ctrl.search()">
-      <!-- <custom-marker ng-repeat="result in $ctrl.results track by $index"
+      on-bounds-changed="$ctrl.search()">
+<!--       <custom-marker ng-repeat="result in $ctrl.results track by $index"
         id="custom-marker-{{$index}}"
         on-click="$ctrl.map.showInfoWindow('foo', 'custom-marker-'+$index)"
         position="{{result.pos}}">
@@ -19,5 +20,4 @@
     </ng-map>
     <img ng-click="$ctrl.setCenter(event)" class="locate" src="images/locate.png" alt="">
   </div>
-  <div>{{$ctrl.results}}</div>
 </ion-content>

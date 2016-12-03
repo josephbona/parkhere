@@ -23,9 +23,10 @@ function GarageController(NgMap, GarageService) {
   ctrl.search = function(event) {
     var center = _map.getCenter().toJSON();
     var zoom = _map.getZoom();
-    console.log('center: ' + center + ' zoom: ' + zoom);
-    ctrl.results = GarageService.search(center);
-    console.log(ctrl.results);
+    // console.log('center: ' + center + ' zoom: ' + zoom);
+    GarageService.search(center).then(function(results) {
+      ctrl.results = results;
+    })
   }
 }
 
