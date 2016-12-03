@@ -1,15 +1,16 @@
-function GarageController(NgMap, GarageService, $ionicModal) {
+function GarageController(NgMap, GarageService, $ionicModal, $scope) {
   var ctrl = this;
   NgMap.getMap().then(function(map) {
     ctrl.map = map;
   });
-  $ionicModal.fromTemplateUrl('../../common/modal.html', {
-      animation: 'slide-in-up'
-    }).then(function(modal) {
-      ctrl.modal = modal;
-    });
   ctrl.$onInit = function () {
     ctrl.results = null;
+    $ionicModal.fromTemplateUrl('templates/modal.html', {
+        scope: $scope,
+        animation: 'slide-in-up'
+      }).then(function(modal) {
+        ctrl.modal = modal;
+      });
   };
   ctrl.setCenter = function(event) {
     console.log('event', event);
@@ -22,6 +23,7 @@ function GarageController(NgMap, GarageService, $ionicModal) {
     console.log("dragging");
   }
   ctrl.openModal = function() {
+    ctrl.selectedResult = this.data;
     ctrl.modal.show();
   }
   ctrl.closeModal = function() {
@@ -33,9 +35,12 @@ function GarageController(NgMap, GarageService, $ionicModal) {
     if (zoom >= 15) {
       GarageService.search(center).then(function(results) {
         ctrl.results = results.data.parking_listings;
-        console.log(ctrl.results);
+        // console.log(ctrl.results);
       })
     }
+  }
+  ctrl.bookGarage = function() {
+    window.open(ctrl.selectedResult.parkwhiz_url, '_blank', 'location=yes');
   }
 }
 

@@ -1,4 +1,4 @@
-function GarageService($http, $q) {
+function GarageService($http) {
   var baseUrl = 'http://api.parkwhiz.com';
   var key = 'b3963fd412bdd8e79098096dab3be781';
   // latlng is an obj {lat: int, lng: int}
