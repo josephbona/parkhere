@@ -33,7 +33,7 @@ function getDetails(desc) {
         return {type: "METER", schedule: schedule};
     }
     return {
-        type: "UNKOWN",
+        type: "UNKNOWN",
         schedule: null
     };
 }
