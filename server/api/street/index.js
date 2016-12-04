@@ -1,10 +1,10 @@
 const route = require('express').Router();
-const { findAll, deleteOne } = require('../../db');
+const { getSigns } = require('../../db');
 
 module.exports = route;
 
 route.post('/points', (req, res, next) =>{
-  findAll(req.body)
+  getSigns(req.body)
     .then(featureCollection => {
       res.send(featureCollection);
     })

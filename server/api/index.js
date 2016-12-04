@@ -2,4 +2,5 @@ const route = require('express').Router();
 
 module.exports = route;
 
-route.use('/map', require('./maps'));
+route.use('/street', require('./street'));
+route.use('/private', require('./private'));
