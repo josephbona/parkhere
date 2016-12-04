@@ -38,6 +38,7 @@ function GarageController(NgMap, GarageService, $ionicModal, $scope, $ionicLoadi
     ctrl.modal.hide();
   }
   ctrl.search = function(event) {
+    ctrl.results = null;
     var center = ctrl.map.getCenter().toJSON();
     var zoom = ctrl.map.getZoom();
     if (zoom >= 15) {
