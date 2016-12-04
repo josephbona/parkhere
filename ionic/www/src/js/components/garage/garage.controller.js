@@ -1,9 +1,13 @@
-function GarageController(NgMap, GarageService, $ionicModal, $scope) {
+function GarageController(NgMap, GarageService, $ionicModal, $scope, $ionicLoading) {
   var ctrl = this;
+  var loadingOptions = {
+    content: 'Loading'
+  }
   NgMap.getMap().then(function(map) {
     ctrl.map = map;
   });
   ctrl.$onInit = function () {
+    $ionicLoading.show(loadingOptions);
     ctrl.results = null;
     $ionicModal.fromTemplateUrl('templates/modal.html', {
         scope: $scope,
@@ -33,12 +37,14 @@ function GarageController(NgMap, GarageService, $ionicModal, $scope) {
     ctrl.modal.hide();
   }
   ctrl.search = function(event) {
+    $ionicLoading.show(loadingOptions);
     var center = ctrl.map.getCenter().toJSON();
     var zoom = ctrl.map.getZoom();
     if (zoom >= 15) {
       GarageService.search(center).then(function(results) {
         ctrl.results = results.data.parking_listings;
         console.log(ctrl.results);
+        $ionicLoading.hide();
       })
     }
   }
