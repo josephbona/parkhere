@@ -37,8 +37,6 @@ module.exports = {
           feature.seqno = result.seqno;
           feature.signdesc = result.signdesc1;
           let p = parse(feature.signdesc);
-          // // console.log("desc: ", featureCollection.features[i].signdesc);
-          // // console.log("parsed: ", p);
           feature.regType = p.type;
           feature.schedule = p.schedule;
           featureCollection.features.push(feature);
