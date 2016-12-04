@@ -3,13 +3,15 @@
     <ng-map
       center="current-position"
       geo-fallback-center="[40.7626668, -73.9176167]"
+      zoom="17"
       disable-default-u-i="true"
       clickableIcons="false"
       on-dragstart="$ctrl.dragStart()"
-      on-dragend="$ctrl.dragEnd()">
+      on-dragend="$ctrl.dragEnd()"
+      on-bounds-changed="$ctrl.onBoundsChanged()">
 
-      <shape ng-repeat="path in $ctrl.paths track by $index" id="marker-{{$index}}" name="polyline" id="foo"
-      path="{{ path }}"
+      <shape ng-repeat="(key, value) in $ctrl.paths track by $index" id="marker-{{$index}}" name="polyline" id="foo"
+      path="{{ value }}"
       stroke-color="#FF0000"
       stroke-opacity="1.0"
       stroke-weight="3">

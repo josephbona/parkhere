@@ -39,6 +39,10 @@ function parseResponse(data, map) {
     blocks[blockId].sort(compare);
     colorDrawLine(blocks[blockId], map);
   }
+
+
+
+  map.data.addGeoJson(data);
 }
 
 // group blocks by block identifier, store data for each point on block
@@ -198,7 +202,7 @@ function getDefaultArrow(pointList) {
     return;
   var first = pointList[0];
   var last = pointList[pointList.length - 1];
-  return Math.abs(first.lat - last.lat) > Math.abs(first.lng - last.lng)? ["N", "S"]: ["E", "W"];
+  return Math.abs(first.lat - last.lat) > Math.abs(first.lng - last.lng) ? ["N", "S"] : ["E", "W"];
 }
 
 function getNeighbors(idx, pointList) {
@@ -208,7 +212,7 @@ function getNeighbors(idx, pointList) {
     return [null, pointList[1]];
   if (idx === pointList.length - 1)
     return [pointList[pointList.length - 2], null];
-  return [pointList[idx-1], pointList[idx+1]];
+  return [pointList[idx - 1], pointList[idx + 1]];
 }
 
 function drawLine(pointList, map, color) {

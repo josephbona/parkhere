@@ -1,23 +1,56 @@
-function StreetService($http, $q) {
+function StreetService($http) {
   let blocks = {};
-  let paths = [];
+  let features = {};
+  let adminEnabled = true;
 
   this.requestPoints = function(bounds) {
     
     return $http.post('http://localhost:3000/api/map/points', bounds)
       .then(function(results) {
+        angular.copy(results.data, features);
         let points = results.data;
-        
-        points.features.forEach(_createBlocks);
 
-        for (let blockId in blocks) {
-          paths.push(blocks[blockId]);
-        }
-        return paths;
+        points.features.forEach(_createBlocks);
+        return blocks;
       })
       .catch(function(error) {
         console.log(error);
       });
+  }
+
+  this.enableMarkers = function(map){
+    if (adminEnabled){
+      return features;
+    }
+  };
+
+  this.getBounds = function(map){
+    let _bounds = map.getBounds();
+    let NE = _bounds.getNorthEast();
+    let SW = _bounds.getSouthWest();
+    let bounds = {
+      _northEast: {
+        lat: NE.lat(),
+        lng: NE.lng()
+      },
+      _southWest: {
+        lat: SW.lat(),
+        lng: SW.lng()
+      }
+    };
+    return bounds;
+  }
+
+  this.clearShapes = function(map){
+    angular.copy({}, blocks);
+
+    if (map.shapes){
+      for (let s in map.shapes){
+        if (s){
+          map.shapes[s].setMap(null);
+        }
+      }
+    }
   }
 
   function _createBlocks(feature) {

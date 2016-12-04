@@ -1,4 +1,5 @@
 var map;
+
 function initMap() {
   var fsa = {
     lat: 40.7626668,
@@ -9,7 +10,7 @@ function initMap() {
     center: fsa
   });
 
-  google.maps.event.addListener(map, 'dragstart', function(){
+  google.maps.event.addListener(map, 'dragstart', function() {
     deletepaths();
 
   });
@@ -17,7 +18,7 @@ function initMap() {
   google.maps.event.addListener(map, 'dragend', function() {
     var _bounds = map.getBounds();
     var NE = _bounds.getNorthEast();
-    var SW = _bounds.getSouthWest(); 
+    var SW = _bounds.getSouthWest();
 
     var bounds = {
       _northEast: {
@@ -31,5 +32,19 @@ function initMap() {
     };
     requestPoints(bounds, map);
   });
-}
 
+  map.data.addListener('mouseup', function(event){
+    console.log(event.latLng.lat());
+  });
+
+  //looking to use this to get marker info
+  map.data.addListener('mousedown', function(event){
+    // console.log(event.feature.getProperty('signdesc'));
+  });
+
+  map.data.setControls(['Point']);
+  map.data.setStyle({
+    editable: true,
+    draggable: true
+  });
+}
