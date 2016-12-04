@@ -3,7 +3,7 @@ const parse = require('./parse').parse;
 let db;
 
 function connect() {
-  const connString = 'postgres://localhost/nycparking';
+  const connString = 'postgres://localhost/postgistest';
 
   if (!db) {
     db = pgp(connString);
