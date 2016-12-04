@@ -1,3 +1,13 @@
+function unixToTime(unix) {
+  var date = new Date(unix_timestamp*1000);
+  // Hours part from the timestamp
+  var hours = date.getHours();
+  // Minutes part from the timestamp
+  var minutes = "0" + date.getMinutes();
+  // Seconds part from the timestamp
+  var seconds = "0" + date.getSeconds();
+}
+
 function GarageController(NgMap, GarageService, $ionicModal, $scope) {
   var ctrl = this;
   NgMap.getMap().then(function(map) {
@@ -35,7 +45,7 @@ function GarageController(NgMap, GarageService, $ionicModal, $scope) {
     if (zoom >= 15) {
       GarageService.search(center).then(function(results) {
         ctrl.results = results.data.parking_listings;
-        // console.log(ctrl.results);
+        console.log(ctrl.results);
       })
     }
   }

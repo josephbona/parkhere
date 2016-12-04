@@ -10,9 +10,22 @@
     color: #969696;
   }
 }
-.listing-price {
-  text-align: right;
+.listing-highlight {
+  text-align: center;
   font-size: 30px;
-  margin-top: 8px;
+  margin-top: -2px;
   display: inherit;
+  padding: 4px;
+  border: 1px solid #ddd;
+  small {
+    font-size: 14px;
+    display: block;
+  }
+}
+.listing-amenities {
+  font-size: 15px;
+  .icon {
+    display: block;
+    margin: 0 auto 5px;
+  }
 }

@@ -6,10 +6,15 @@
   display: block;
   margin: auto;
 }
-.text-uppercase {
+.button {
   text-transform: uppercase;
+  font-weight: 900;
 }
 .no-padding-y {
   padding-top: 0 !important;
   padding-bottom: 0 !important;
+}
+.button-outline.button-full {
+  border-left-width: 1px;
+  border-right-width: 1px;
 }
