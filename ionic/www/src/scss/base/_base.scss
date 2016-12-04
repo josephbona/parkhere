@@ -1,5 +1,14 @@
-.pane {
+login ion-content,
+register ion-content {
   background-color: $positive;
+}
+search ion-content {
+  background-image: url('../images/city.png');
+  background-repeat: no-repeat;
+  background-position: bottom center;
+}
+app {
+  background-color: #FFF;
 }
 .logo-full {
   max-width: 290px;

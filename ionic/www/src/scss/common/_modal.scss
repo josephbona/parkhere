@@ -27,5 +27,16 @@
   .icon {
     display: block;
     margin: 0 auto 5px;
+    font-size: 25px;
+    font-weight: bold;
+    line-height: 30px;
+    color: #4f606c;
+  }
+}
+.listing-schedule {
+  .item-button-right {
+    button {
+      margin-top: 10px;
+    }
   }
 }

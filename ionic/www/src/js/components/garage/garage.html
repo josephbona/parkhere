@@ -1,8 +1,8 @@
 <ion-content class="has-header has-tabs-top">
   <div class="map">
     <ng-map
-      center="current-position"
-      zoom="15"
+      center="{{$ctrl.center}}"
+      zoom="{{$ctrl.zoom}}"
       disable-default-u-i="true"
       clickableIcons="false"
       on-dragstart="$ctrl.dragStart()"
@@ -45,28 +45,40 @@
         </ng-map>
       </div>
       <div class="row listing-amenities">
-        <div ng-if="$ctrl.selectedResult.valet" class="col text-center">
+        <div class="col col-20 text-center">
+          <span class="icon">{{$ctrl.selectedResult.price_formatted}}</span>
+          Price
+        </div>
+        <div ng-if="$ctrl.selectedResult.valet" class="col col-20 text-center">
           <img class="icon" src="images/amenities/am_valet.svg" alt="">
           Valet
         </div>
-        <div ng-if="$ctrl.selectedResult.obstructed" class="col text-center">
-          <img class="icon" src="images/amenities/am_obstruct.svg" alt="">
-          Obstructed
-        </div>
-        <div ng-if="$ctrl.selectedResult.indoor" class="col text-center">
+        <div ng-if="$ctrl.selectedResult.indoor" class="col col-20 text-center">
           <img class="icon" src="images/amenities/am_covered.svg" alt="">
           Covered
         </div>
-        <div ng-if="$ctrl.selectedResult.attended" class="col text-center">
+        <div ng-if="$ctrl.selectedResult.attended" class="col col-20 text-center">
           <img class="icon" src="images/amenities/am_attendant.svg" alt="">
           Attended
         </div>
-        <div ng-if="$ctrl.selectedResult.security" class="col text-center">
+        <div ng-if="$ctrl.selectedResult.security" class="col col-20 text-center">
           <img class="icon" src="images/amenities/am_security.svg" alt="">
           Security
         </div>
       </div>
-      <button ng-click="$ctrl.getDirections()" class="button button-full button-outline button-positive">Get Directions</button>
+      <div class="list listing-schedule">
+        <div class="item item-button-right" ion-datetime-picker am-pm monday-first minute-step="15" ng-model="$ctrl.selectedResult.start">
+          <h4>From:</h4>
+          <h2>{{$ctrl.selectedResult.start_formatted}}</h2>
+          <button class="button button-clear button-positive"><i class="icon ion-android-calendar"></i></button>
+        </div>
+        <div class="item item-button-right" ion-datetime-picker am-pm monday-first minute-step="15" ng-model="$ctrl.selectedResult.end">
+          <h4>Until:</h4>
+          <h2>{{$ctrl.selectedResult.end_formatted}}</h2>
+          <button class="button button-clear button-positive"><i class="icon ion-android-calendar"></i></button>
+        </div>
+      </div>
+      <button ng-click="$ctrl.openDatePicker()" class="button button-full button-outline button-positive">Get Directions</button>
       <button ng-click="$ctrl.bookGarage()" class="button button-full button-balanced">Book Now</button>
     </ion-content>
   </ion-modal-view>

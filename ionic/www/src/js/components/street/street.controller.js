@@ -27,6 +27,7 @@ function StreetController(NgMap, StreetService) {
       return
     }
     let bounds = StreetService.getBounds(_map);
+    console.log(bounds);
     StreetService.requestPoints(bounds)
       .then(function(paths) {
         ctrl.paths = paths;

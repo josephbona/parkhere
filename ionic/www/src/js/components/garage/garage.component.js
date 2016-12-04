@@ -10,7 +10,7 @@ angular
     $stateProvider
       .state('garage', {
         parent: 'app',
-        url: '/garage',
+        url: '/garage?latlng&zoom',
         template: '<garage></garage>'
       });
   });
