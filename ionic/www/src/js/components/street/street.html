@@ -7,14 +7,18 @@
       disable-default-u-i="true"
       clickableIcons="false"
       on-dragstart="$ctrl.dragStart()"
-      on-dragend="$ctrl.dragEnd()"
-      on-bounds-changed="$ctrl.onBoundsChanged()">
+      on-dragend="$ctrl.onBoundsChanged()"
+      >
+<!--       on-zoom_changed="$ctrl.onBoundsChanged()"
+      on-center-changed="$ctrl.onBoundsChanged()" -->
+      <!-- on-bounds-changed="$ctrl.onBoundsChanged()"> -->
 
       <shape ng-repeat="path in $ctrl.paths track by $index" id="marker-{{$index}}" name="polyline" id="foo"
       path="{{ path.segment }}"
       stroke-color="{{path.color}}"
       stroke-opacity="1.0"
-      stroke-weight="3">
+      stroke-weight="3"
+      on-click="$ctrl.onSegClick()">
       </shape>
     </ng-map>
     <img ng-click="$ctrl.setCenter(event)" class="locate" src="images/locate.png" alt="">
