@@ -7,9 +7,6 @@ module.exports = app;
 
 app.engine('html', swig.renderFile);
 app.set('view engine', 'html');
-
-app.use('/scripts', express.static('scripts'));
-
 app.use(require('body-parser').json());
 
 app.use((req, res, next) => {
@@ -18,11 +15,10 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use('/scripts', express.static('scripts'));
+app.use('/api', require('./api'));
+
+
 app.get('/', (req, res) => {
   res.render('index');
 });
-
-// app.use('/api', require('./routes'));
-
-app.use('/api', require('./api'));
-

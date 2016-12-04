@@ -34,7 +34,7 @@ function initMap() {
   });
 
   map.data.addListener('mouseup', function(event){
-    console.log(event.latLng.lat());
+    console.log(event.feature.getProperty());
   });
 
   //looking to use this to get marker info
