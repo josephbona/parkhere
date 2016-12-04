@@ -19,7 +19,6 @@ function FeatureCollection() {
 }
 
 module.exports = {
-<<<<<<< HEAD
   getListings: function(bounds) {
     const sql = `SELECT *, ST_ASGeoJSON(geom) as geom from listings WHERE geom && ST_MakeEnvelope(${ bounds._southWest.lng }, ${ bounds._southWest.lat }, ${ bounds._northEast.lng }, ${ bounds._northEast.lat }, 4326);`;
     connect();
@@ -36,10 +35,7 @@ module.exports = {
   },
   getSigns: function(bounds) {
     const sql = `SELECT objectid, sg_order_n, sg_seqno_n AS seqno, signdesc1, ST_AsGeoJSON(geom) as geom FROM parking WHERE geom && ST_MakeEnvelope(${ bounds._southWest.lng }, ${ bounds._southWest.lat }, ${ bounds._northEast.lng }, ${ bounds._northEast.lat }, 4326) ORDER BY CAST(sg_seqno_n AS INTEGER);`;
-=======
-  findAll: function(bounds) {
-    const sql = `SELECT objectid, sg_order_n, sg_seqno_n AS seqno, signdesc1, ST_AsGeoJSON(geom) as geom FROM signs WHERE geom && ST_MakeEnvelope(${ bounds._southWest.lng }, ${ bounds._southWest.lat }, ${ bounds._northEast.lng }, ${ bounds._northEast.lat }, 4326) ORDER BY CAST(sg_seqno_n AS INTEGER);`;
->>>>>>> e04e3bc24c6503c02382b75275be20f8254d2c3c
+
 
     connect();
     return db.many(sql)
