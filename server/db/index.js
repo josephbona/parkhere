@@ -3,7 +3,11 @@ const parse = require('./parse').parse;
 let db;
 
 function connect() {
+<<<<<<< HEAD
   const connString = 'postgres://localhost/postgistest';
+=======
+  const connString = 'postgres://localhost/park_test';
+>>>>>>> 50fb1ffe68057ccfcd57d6c1ca86966833155ba5
 
   if (!db) {
     db = pgp(connString);
@@ -34,7 +38,7 @@ module.exports = {
       .catch(error => console.log(error));
   },
   getSigns: function(bounds) {
-    const sql = `SELECT objectid, sg_order_n, sg_seqno_n AS seqno, signdesc1, ST_AsGeoJSON(geom) as geom FROM parking WHERE geom && ST_MakeEnvelope(${ bounds._southWest.lng }, ${ bounds._southWest.lat }, ${ bounds._northEast.lng }, ${ bounds._northEast.lat }, 4326) ORDER BY CAST(sg_seqno_n AS INTEGER);`;
+    const sql = `SELECT objectid, sg_order_n, sg_seqno_n AS seqno, signdesc1, ST_AsGeoJSON(geom) as geom FROM signs WHERE geom && ST_MakeEnvelope(${ bounds._southWest.lng }, ${ bounds._southWest.lat }, ${ bounds._northEast.lng }, ${ bounds._northEast.lat }, 4326) ORDER BY CAST(sg_seqno_n AS INTEGER);`;
 
 
     connect();
@@ -51,8 +55,11 @@ module.exports = {
           feature.sg_order_n = result.sg_order_n;
           feature.seqno = result.seqno;
           feature.signdesc = result.signdesc1;
+          feature.arrow = result.arrow || null;
           let p = parse(feature.signdesc);
           feature.regType = p.type;
+          if (p.type === "UNKNOWN" || p.type === "BUS INFO")
+            return;
           feature.schedule = p.schedule;
           featureCollection.features.push(feature);
         });
