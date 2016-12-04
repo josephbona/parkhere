@@ -2,5 +2,6 @@ angular
   .module('components.garage', [
     'ui.router',
     'ionic',
-    'ngMap'
+    'ngMap',
+    'ion-datetime-picker'
   ]);

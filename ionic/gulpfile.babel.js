@@ -24,7 +24,9 @@ const paths = {
   modules: [
     'ionic/js/ionic.bundle.js',
     'ionic.cloud.min.js',
-    'ngmap/build/scripts/ng-map.min.js'
+    'ngmap/build/scripts/ng-map.min.js',
+    'moment/min/moment-with-locales.min.js',
+    'ion-datetime-picker/release/ion-datetime-picker.min.js'
   ],
   static: [
     `${root}/manifest.json`,

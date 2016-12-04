@@ -1,13 +1,3 @@
-function unixToTime(unix) {
-  var date = new Date(unix_timestamp*1000);
-  // Hours part from the timestamp
-  var hours = date.getHours();
-  // Minutes part from the timestamp
-  var minutes = "0" + date.getMinutes();
-  // Seconds part from the timestamp
-  var seconds = "0" + date.getSeconds();
-}
-
 function GarageController(NgMap, GarageService, $ionicModal, $scope) {
   var ctrl = this;
   NgMap.getMap().then(function(map) {
@@ -34,6 +24,9 @@ function GarageController(NgMap, GarageService, $ionicModal, $scope) {
   }
   ctrl.openModal = function() {
     ctrl.selectedResult = this.data;
+    ctrl.selectedResult.start_formatted = moment.unix(ctrl.selectedResult.start).format('ddd LT');
+    ctrl.selectedResult.end_formatted = moment.unix(ctrl.selectedResult.end).format('ddd LT');
+    console.log(ctrl.selectedResult);
     ctrl.modal.show();
   }
   ctrl.closeModal = function() {
