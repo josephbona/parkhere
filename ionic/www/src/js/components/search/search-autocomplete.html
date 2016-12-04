@@ -1,5 +1,8 @@
-<div class="item ion-place-tools-autocomplete">
-  <input type="text" autocomplete="off" ng-model="searchQuery">
+<div class="ion-place-tools-autocomplete">
+  <label class="item item-input">
+    <i class="icon ion-search placeholder-icon"></i>
+    <input type="text" placeholder="Search by address or location name..." autocomplete="off" ng-model="searchQuery">
+  </label>
   <div class="ion-place-tools-autocomplete-dropdown" ng-if="dropDownActive">
     <ion-list>
       <ion-item ng-repeat="location in locations" ng-click="selectLocation(location)">
