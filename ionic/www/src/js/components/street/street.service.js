@@ -8,6 +8,7 @@ function StreetService($http) {
     return $http.post('http://localhost:3000/api/map/points', bounds)
       .then(function(results) {
         parseResponse(results.data);
+        console.log(segments);
         return segments;
       })
       .catch(function(error) {
@@ -118,8 +119,18 @@ function StreetService($http) {
         if (pToN) {
           var color = getColor(point) || '#00FF00';
           segments.push({
-            segment: [point, neighbors[n]],
-            color: color
+            segment: [
+              {
+                lat: point.lat, 
+                lng: point.lng
+              }, { 
+                lat: neighbors[n].lat,
+                lng: neighbors[n].lng
+              }],
+            color: color,
+            signdesc: point.signdesc,
+            schedule: point.schedule,
+            type: point.type
           });
         }
       }
