@@ -3,7 +3,7 @@ function GarageController(NgMap, GarageService, $ionicModal, $scope, $ionicLoadi
   var loadingOptions = {
     content: 'Loading'
   }
-  NgMap.getMap().then(function(map) {
+  NgMap.getMap("garage-map").then(function(map) {
     ctrl.map = map;
   });
   ctrl.center = $stateParams.latlng ? $stateParams.latlng.split('_') : 'current-position';
