@@ -20,7 +20,7 @@ function StreetController(NgMap, StreetService) {
   }
 
   ctrl.$onInit = function() {
-    NgMap.getMap().then(function(map) {
+    NgMap.getMap("street-map").then(function(map) {
       _map = map;
       let bounds = StreetService.getBounds(_map);
       StreetService.requestPoints(bounds)
