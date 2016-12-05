@@ -1,21 +1,7 @@
 <ion-content class="has-header has-tabs-top">
   <div class="map">
-    <ng-map
-      geo-fallback-center="[40.7626668, -73.9176167]"
-      center="{{$ctrl.center}}"
-      zoom="{{$ctrl.zoom}}"
-      disable-default-u-i="true"
-      clickableIcons="false"
-      on-dragstart="$ctrl.dragStart()"
-      on-dragend="$ctrl.dragEnd()"
-      on-bounds-changed="$ctrl.onBoundsChanged()">
-      <marker
-        ng-repeat="result in $ctrl.results track by $index"
-        id="marker-{{$index}}"
-        icon="images/marker.png"
-        data="{{ result }}"
-        position="{{ result.geom.coordinates }}"
-        on-click="$ctrl.openModal()">
+    <ng-map geo-fallback-center="[40.7626668, -73.9176167]" center="{{$ctrl.center}}" zoom="{{$ctrl.zoom}}" disable-default-u-i="true" clickableIcons="false" on-dragstart="$ctrl.dragStart()" on-dragend="$ctrl.dragEnd()" on-bounds-changed="$ctrl.onBoundsChanged()">
+      <marker ng-repeat="result in $ctrl.results track by $index" id="marker-{{$index}}" icon="images/marker.png" data="{{ result }}" position="{{ result.geom.coordinates }}" on-click="$ctrl.openModal()">
       </marker>
   </div>
 </ion-content>
@@ -28,46 +14,60 @@
     <ion-content class="padding">
       <div class="row no-padding-y">
         <div class="col col-75">
-          <h4 class="listing-title">{{$ctrl.selectedResult.address}}<span>{{$ctrl.selectedResult.location_name}}</span></h4>
+          <h4 class="listing-title">{{$ctrl.selectedResult.address}}<span>{{$ctrl.selectedResult.city}}</span></h4>
         </div>
         <div class="col col-25">
           <span class="listing-highlight">
-            {{$ctrl.selectedResult.available_spots}}
             <small ng-if="$ctrl.selectedResult.active == 1">Available</small>
           </span>
         </div>
       </div>
-      <div class="modal-map">
-        <img ng-src="{{$ctrl.selectedResult.pics[0]}}">
-        <!-- <ng-map
+      <!-- <div class="modal-map">
+        <ng-map
           street-view="StreetViewPanorama(document.querySelector('.modal-map'), {position:new google.maps.LatLng({{$ctrl.selectedResult.lat}}, {{$ctrl.selectedResult.lng}})})">
           <marker position="{{$ctrl.selectedResult.lat}}, {{$ctrl.selectedResult.lng}}"></marker>
-        </ng-map> -->
+        </ng-map>
+      </div> -->
+      <div>
+        <img ng-src="http://cars.typepad.com/.a/6a00d83451b3c669e201901cb14cea970b-800wi">
       </div>
       <div class="row listing-amenities">
-        <div ng-if="$ctrl.selectedResult.valet" class="col text-center">
-          <img class="icon" src="images/amenities/am_valet.svg" alt="">
-          Valet
+        <div class="col col-18 text-center">
+          <span class="icon">{{$ctrl.selectedResult.price}}</span>
+          Price
         </div>
-        <div ng-if="$ctrl.selectedResult.obstructed" class="col text-center">
-          <img class="icon" src="images/amenities/am_obstruct.svg" alt="">
-          Obstructed
+        <div ng-repeat="amentity in $ctrl.selectedResult.amenities" class="col col-20 text-center">
+          <img class="icon" src="images/amenities/am_{{ amentity | lowercase }}.svg" alt="">
+          {{ amentity }}
         </div>
-        <div ng-if="$ctrl.selectedResult.indoor" class="col text-center">
+
+        <!-- <div ng-if="$ctrl.selectedResult.indoor" class="col col-20 text-center">
           <img class="icon" src="images/amenities/am_covered.svg" alt="">
           Covered
         </div>
-        <div ng-if="$ctrl.selectedResult.attended" class="col text-center">
+        <div ng-if="$ctrl.selectedResult.attended" class="col col-20 text-center">
           <img class="icon" src="images/amenities/am_attendant.svg" alt="">
           Attended
         </div>
-        <div ng-if="$ctrl.selectedResult.security" class="col text-center">
+        <div ng-if="$ctrl.selectedResult.security" class="col col-20 text-center">
           <img class="icon" src="images/amenities/am_security.svg" alt="">
           Security
+        </div> -->
+      </div>
+      <div class="list listing-schedule">
+        <div class="item item-button-right" ion-datetime-picker am-pm monday-first minute-step="15" ng-model="$ctrl.selectedResult.start">
+          <h4>From:</h4>
+          <h2>{{$ctrl.selectedResult.start_formatted}}</h2>
+          <button class="button button-clear button-positive"><i class="icon ion-android-calendar"></i></button>
+        </div>
+        <div class="item item-button-right" ion-datetime-picker am-pm monday-first minute-step="15" ng-model="$ctrl.selectedResult.end">
+          <h4>Until:</h4>
+          <h2>{{$ctrl.selectedResult.end_formatted}}</h2>
+          <button class="button button-clear button-positive"><i class="icon ion-android-calendar"></i></button>
         </div>
       </div>
-      <button ng-click="$ctrl.getDirections()" class="button button-full button-outline button-positive">Get Directions</button>
-      <button ng-click="$ctrl.bookGarage()" class="button button-full button-balanced">Book Now</button>
+      <button ng-click="$ctrl.openDatePicker()" class="button button-full button-outline button-positive">Get Directions</button>
+      <button ng-click="$ctrl.bookGarage()" class="button button-full button-balanced">Request To Book</button>
     </ion-content>
   </ion-modal-view>
 </script>
