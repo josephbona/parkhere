@@ -1,32 +1,33 @@
-function PrivateController(NgMap, PrivateService, $ionicModal, $scope, $stateParams) {
+function PrivateController(NgMap, PrivateService, $ionicModal, $scope, $stateParams, $timeout) {
   let ctrl = this;
-  let _map;
+  let loadingOptions = {
+    content: 'Loading'
+  }
   ctrl.center = $stateParams.latlng ? $stateParams.latlng.split('_') : 'current-position';
   ctrl.zoom = $stateParams.zoom ? $stateParams.zoom : 15;
 
   ctrl.$onInit = function() {
-    NgMap.getMap().then(function(map) {
-      _map = map;
-      let bounds = PrivateService.getBounds(_map);
+    NgMap.getMap('private-map').then(function(map) {
+      ctrl.map = map;
+      let bounds = PrivateService.getBounds(ctrl.map);
       PrivateService.requestPoints(bounds)
         .then(function(results) {
           ctrl.results = results;
-
         });
     });
     $ionicModal.fromTemplateUrl('templates/modal.html', {
-        scope: $scope,
-        animation: 'slide-in-up'
-      }).then(function(modal) {
-        ctrl.modal = modal;
-      });
-  }
+      scope: $scope,
+      animation: 'slide-in-up'
+    }).then(function(modal) {
+      ctrl.modal = modal;
+    });
+  };
 
   ctrl.onBoundsChanged = function(event) {
-    if (!_map) {
+    if (!ctrl.map) {
       return
     }
-    let bounds = PrivateService.getBounds(_map);
+    let bounds = PrivateService.getBounds(ctrl.map);
     PrivateService.requestPoints(bounds)
       .then(function(results) {
         ctrl.results = results;
@@ -34,6 +35,7 @@ function PrivateController(NgMap, PrivateService, $ionicModal, $scope, $statePar
   }
 
   ctrl.dragStart = function(event) {
+    google.maps.event.trigger(ctrl.map, 'resize');
 
   }
 
@@ -43,11 +45,13 @@ function PrivateController(NgMap, PrivateService, $ionicModal, $scope, $statePar
 
   ctrl.openModal = function() {
     ctrl.selectedResult = this.data;
+    ctrl.selectedResult.start_formatted = moment.unix(ctrl.selectedResult.period).format('ddd LT');
+    ctrl.selectedResult.end_formatted = moment.unix(ctrl.selectedResult.end).format('ddd LT');
     console.log(ctrl.selectedResult);
     ctrl.modal.show();
   }
 
-    ctrl.closeModal = function() {
+  ctrl.closeModal = function() {
     ctrl.modal.hide();
   }
 }

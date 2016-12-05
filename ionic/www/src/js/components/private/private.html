@@ -1,8 +1,19 @@
 <ion-content class="has-header has-tabs-top">
   <div class="map">
-    <ng-map geo-fallback-center="[40.7626668, -73.9176167]" center="{{$ctrl.center}}" zoom="{{$ctrl.zoom}}" disable-default-u-i="true" clickableIcons="false" on-dragstart="$ctrl.dragStart()" on-dragend="$ctrl.dragEnd()" on-bounds-changed="$ctrl.onBoundsChanged()">
+    <ng-map 
+    
+      id="private-map"
+      geo-fallback-center="[40.7626668, -73.9176167]" 
+      center="{{$ctrl.center}}" 
+      zoom="{{$ctrl.zoom}}" 
+      disable-default-u-i="true" 
+      clickableIcons="false" 
+      on-dragstart="$ctrl.dragStart()" 
+      on-dragend="$ctrl.dragEnd()" 
+      on-bounds-changed="$ctrl.onBoundsChanged()">
       <marker ng-repeat="result in $ctrl.results track by $index" id="marker-{{$index}}" icon="images/marker.png" data="{{ result }}" position="{{ result.geom.coordinates }}" on-click="$ctrl.openModal()">
       </marker>
+    <img ng-click="$ctrl.setCenter(event)" class="locate" src="images/locate.png" alt="">
   </div>
 </ion-content>
 <script id="templates/modal.html" type="text/ng-template">
@@ -22,50 +33,23 @@
           </span>
         </div>
       </div>
-      <!-- <div class="modal-map">
-        <ng-map
-          street-view="StreetViewPanorama(document.querySelector('.modal-map'), {position:new google.maps.LatLng({{$ctrl.selectedResult.lat}}, {{$ctrl.selectedResult.lng}})})">
-          <marker position="{{$ctrl.selectedResult.lat}}, {{$ctrl.selectedResult.lng}}"></marker>
-        </ng-map>
-      </div> -->
       <div>
         <img ng-src="http://cars.typepad.com/.a/6a00d83451b3c669e201901cb14cea970b-800wi">
       </div>
       <div class="row listing-amenities">
         <div class="col col-18 text-center">
           <span class="icon">{{$ctrl.selectedResult.price}}</span>
-          Price
+          Per Month
         </div>
         <div ng-repeat="amentity in $ctrl.selectedResult.amenities" class="col col-20 text-center">
           <img class="icon" src="images/amenities/am_{{ amentity | lowercase }}.svg" alt="">
           {{ amentity }}
         </div>
-
-        <!-- <div ng-if="$ctrl.selectedResult.indoor" class="col col-20 text-center">
-          <img class="icon" src="images/amenities/am_covered.svg" alt="">
-          Covered
-        </div>
-        <div ng-if="$ctrl.selectedResult.attended" class="col col-20 text-center">
-          <img class="icon" src="images/amenities/am_attendant.svg" alt="">
-          Attended
-        </div>
-        <div ng-if="$ctrl.selectedResult.security" class="col col-20 text-center">
-          <img class="icon" src="images/amenities/am_security.svg" alt="">
-          Security
-        </div> -->
       </div>
-      <div class="list listing-schedule">
-        <div class="item item-button-right" ion-datetime-picker am-pm monday-first minute-step="15" ng-model="$ctrl.selectedResult.start">
-          <h4>From:</h4>
-          <h2>{{$ctrl.selectedResult.start_formatted}}</h2>
-          <button class="button button-clear button-positive"><i class="icon ion-android-calendar"></i></button>
-        </div>
-        <div class="item item-button-right" ion-datetime-picker am-pm monday-first minute-step="15" ng-model="$ctrl.selectedResult.end">
-          <h4>Until:</h4>
-          <h2>{{$ctrl.selectedResult.end_formatted}}</h2>
-          <button class="button button-clear button-positive"><i class="icon ion-android-calendar"></i></button>
-        </div>
+      <div>
+        {{$ctrl.selectedResult.description}}
       </div>
+      <br clear="all">
       <button ng-click="$ctrl.openDatePicker()" class="button button-full button-outline button-positive">Get Directions</button>
       <button ng-click="$ctrl.bookGarage()" class="button button-full button-balanced">Request To Book</button>
     </ion-content>

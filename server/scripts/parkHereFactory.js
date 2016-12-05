@@ -9,7 +9,7 @@ function requestPoints(bounds, map) {
 
   $.ajax({
     type: 'POST',
-    url: '/api/map/points',
+    url: '/api/street/points',
     dataType: 'json',
     data: JSON.stringify(bounds),
     contentType: 'application/json; charset=utf-8',
