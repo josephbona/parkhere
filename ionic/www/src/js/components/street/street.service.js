@@ -5,7 +5,7 @@ function StreetService($http) {
 
   this.requestPoints = function(bounds) {
     
-    return $http.post('http://localhost:3000/api/street/points', bounds)
+    return $http.post('https://wjl-park-here.herokuapp.com/api/street/points', bounds)
       .then(function(results) {
         parseResponse(results.data);
         console.log(segments);

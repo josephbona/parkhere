@@ -4,7 +4,7 @@ function PrivateService($http) {
   let adminEnabled = true;
 
   this.requestPoints = function(bounds) {
-    return $http.post('http://localhost:3000/api/private/points', bounds)
+    return $http.post('https://wjl-park-here.herokuapp.com/api/private/points', bounds)
       .then(function(results) {
         return results.data;
       })
