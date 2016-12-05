@@ -1,6 +1,8 @@
-function PrivateController(NgMap, PrivateService, $ionicModal, $scope) {
+function PrivateController(NgMap, PrivateService, $ionicModal, $scope, $stateParams) {
   let ctrl = this;
   let _map;
+  ctrl.center = $stateParams.latlng ? $stateParams.latlng.split('_') : 'current-position';
+  ctrl.zoom = $stateParams.zoom ? $stateParams.zoom : 15;
 
   ctrl.$onInit = function() {
     NgMap.getMap().then(function(map) {
@@ -41,6 +43,7 @@ function PrivateController(NgMap, PrivateService, $ionicModal, $scope) {
 
   ctrl.openModal = function() {
     ctrl.selectedResult = this.data;
+    console.log(ctrl.selectedResult);
     ctrl.modal.show();
   }
 

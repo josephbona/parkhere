@@ -10,7 +10,7 @@ angular
     $stateProvider
       .state('private', {
         parent: 'app',
-        url: '/private',
+        url: '/private?latlng&zoom',
         template: '<private></private>'
       });
   });

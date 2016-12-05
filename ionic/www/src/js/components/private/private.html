@@ -1,9 +1,9 @@
 <ion-content class="has-header has-tabs-top">
   <div class="map">
     <ng-map
-      center="current-position"
       geo-fallback-center="[40.7626668, -73.9176167]"
-      zoom="17"
+      center="{{$ctrl.center}}"
+      zoom="{{$ctrl.zoom}}"
       disable-default-u-i="true"
       clickableIcons="false"
       on-dragstart="$ctrl.dragStart()"
@@ -33,16 +33,16 @@
         <div class="col col-25">
           <span class="listing-highlight">
             {{$ctrl.selectedResult.available_spots}}
-            <small ng-if="$ctrl.selectedResult.available_spots !== 1">spots</small>
-            <small ng-if="$ctrl.selectedResult.available_spots == 1">spot</small>
+            <small ng-if="$ctrl.selectedResult.active == 1">Available</small>
           </span>
         </div>
       </div>
       <div class="modal-map">
-        <ng-map
+        <img ng-src="{{$ctrl.selectedResult.pics[0]}}">
+        <!-- <ng-map
           street-view="StreetViewPanorama(document.querySelector('.modal-map'), {position:new google.maps.LatLng({{$ctrl.selectedResult.lat}}, {{$ctrl.selectedResult.lng}})})">
           <marker position="{{$ctrl.selectedResult.lat}}, {{$ctrl.selectedResult.lng}}"></marker>
-        </ng-map>
+        </ng-map> -->
       </div>
       <div class="row listing-amenities">
         <div ng-if="$ctrl.selectedResult.valet" class="col text-center">
