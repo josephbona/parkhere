@@ -1,16 +1,17 @@
-function StreetController(NgMap, StreetService) {
+function StreetController(NgMap, StreetService, $rootScope) {
   const ctrl = this;
-  let _map;
 
-  ctrl.log = function(event){
+  ctrl.log = function(event) {
     var args = [].slice.call(arguments).slice(1);
-    args.forEach(function(arg) {console.log(arg)});
+    args.forEach(function(arg) {
+      console.log(arg)
+    });
   };
 
   ctrl.onSegClick = function(event) {
-    console.log(_map.shapes);
-    for (var shape in _map.shapes) {
-      _map.shapes[shape].setOptions({
+    console.log(ctrl.map.shapes);
+    for (var shape in ctrl.map.shapes) {
+      ctrl.map.shapes[shape].setOptions({
         strokeWeight: 3
       });
     }
@@ -20,30 +21,33 @@ function StreetController(NgMap, StreetService) {
   }
 
   ctrl.$onInit = function() {
-    NgMap.getMap("street-map").then(function(map) {
-      _map = map;
-      let bounds = StreetService.getBounds(_map);
-      StreetService.requestPoints(bounds)
-        .then(function(paths) {
-          ctrl.paths = paths;
-        });
-    });
+    NgMap.getMap("street-map")
+      .then(function(map) {
+        ctrl.map = map;
+        let bounds = StreetService.getBounds(ctrl.map);
+        StreetService.requestPoints(bounds)
+          .then(function(paths) {
+            ctrl.paths = paths;
+          });
+      });
   }
 
   ctrl.setCenter = function(event) {
-    _map.setCenter(event.latLng);
+    ctrl.map.setCenter(event.latLng);
   }
 
   ctrl.dragStart = function(event) {
-    StreetService.clearShapes(_map);
+    google.maps.event.trigger(ctrl.map, 'resize');
+
+    StreetService.clearShapes(ctrl.map);
     ctrl.paths = [];
   };
 
   ctrl.onBoundsChanged = function(event) {
-    if (!_map) {
+    if (!ctrl.map) {
       return
     }
-    let bounds = StreetService.getBounds(_map);
+    let bounds = StreetService.getBounds(ctrl.map);
     console.log(bounds);
     StreetService.requestPoints(bounds)
       .then(function(paths) {
@@ -54,6 +58,8 @@ function StreetController(NgMap, StreetService) {
   ctrl.dragEnd = function(event) {
 
   }
+
+
 }
 
 angular

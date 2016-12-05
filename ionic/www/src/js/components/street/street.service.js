@@ -16,12 +16,6 @@ function StreetService($http) {
       });
   }
 
-  // this.enableMarkers = function(map){
-  //   if (adminEnabled){
-  //     return features;
-  //   }
-  // };
-
   this.getBounds = function(map){
     let _bounds = map.getBounds();
     let NE = _bounds.getNorthEast();

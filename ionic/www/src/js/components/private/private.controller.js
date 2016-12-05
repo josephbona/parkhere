@@ -36,7 +36,6 @@ function PrivateController(NgMap, PrivateService, $ionicModal, $scope, $statePar
 
   ctrl.dragStart = function(event) {
     google.maps.event.trigger(ctrl.map, 'resize');
-
   }
 
   ctrl.dragend = function(event) {
