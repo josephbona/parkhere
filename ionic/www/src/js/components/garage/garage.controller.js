@@ -3,13 +3,13 @@ function GarageController(NgMap, GarageService, $ionicModal, $scope, $ionicLoadi
   var loadingOptions = {
     content: 'Loading'
   }
-  NgMap.getMap("garage-map").then(function(map) {
-    ctrl.map = map;
-  });
   ctrl.center = $stateParams.latlng ? $stateParams.latlng.split('_') : 'current-position';
   ctrl.zoom = $stateParams.zoom ? $stateParams.zoom : 15;
   ctrl.$onInit = function () {
-    ctrl.results = null;
+    NgMap.getMap("garage-map").then(function(map) {
+      ctrl.map = map;
+      ctrl.search();
+    });
     $ionicModal.fromTemplateUrl('templates/modal.html', {
         scope: $scope,
         animation: 'slide-in-up'
@@ -38,6 +38,7 @@ function GarageController(NgMap, GarageService, $ionicModal, $scope, $ionicLoadi
     ctrl.modal.hide();
   }
   ctrl.search = function(event) {
+    console.log("searching...");
     ctrl.results = null;
     var center = ctrl.map.getCenter().toJSON();
     var zoom = ctrl.map.getZoom();
