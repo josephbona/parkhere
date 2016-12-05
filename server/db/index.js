@@ -1,12 +1,12 @@
 const pgp = require('pg-promise')();
 const parse = require('./parse').parse;
+const { credentials } = require('../credentials');
 let db;
 
 function connect() {
-  const connString = process.env.DATABASE_URL;
 
   if (!db) {
-    db = pgp(connString);
+    db = pgp(credentials);
     return db;
   }
   return db;
