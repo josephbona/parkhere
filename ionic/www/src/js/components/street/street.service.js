@@ -117,6 +117,12 @@ function StreetService($http) {
         // if it does, draw a line between the point and the neighbor
         if (pToN) {
           var color = getColor(point) || colors.green;
+          var until;
+          var days = ['SUN', 'MON', "TUE", 'WED', 'THU', 'FRI', 'SAT'];
+          var today = new Date();
+          var dayOfWeek = days[today.getDay()];
+          if (color === colors.red || color === colors.yellow)
+            until = point.schedule[dayOfWeek][1];
           segments.push({
             segment: [
               {
@@ -129,7 +135,8 @@ function StreetService($http) {
             color: color,
             signdesc: point.signdesc,
             schedule: point.schedule,
-            type: point.type
+            type: point.type,
+            until: until
           });
         }
       }

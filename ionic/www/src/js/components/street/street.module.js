@@ -1,5 +1,7 @@
 angular
   .module('components.street', [
     'ui.router',
-    'ngMap'
+    'ionic',
+    'ngMap',
+    'ion-datetime-picker'
   ]);
