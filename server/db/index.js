@@ -32,6 +32,19 @@ module.exports = {
       })
       .catch(error => console.log(error));
   },
+  addListing: function(newListing) {
+    const sql = `INSERT INTO listings (renter_email, rentee_email, price, period, active, amenities, pics, address, city, description, geom) VALUES ('${newListing.renterEmail }', '', '${newListing.price }', '${newListing.listingEnd }', 1, '"[${newListing.amenities }]"', '', '${newListing.address }', '${newListing.city }' ,'${ newListing.description }', ST_GeomFromTexT('POINT(${ newListing.geom.lng } ${newListing.geom.lat })', 4326));`;
+    connect();
+    return db.one(sql)
+      .then(results => {        
+        results.forEach((result) => {
+          result.geom = JSON.parse(result.geom);
+          result.geom.coordinates.reverse();
+        });
+        return results;
+      })
+      .catch(error => console.log(error));
+  },
   getSigns: function(bounds) {
     const sql = `SELECT objectid, sg_order_n, sg_seqno_n AS seqno, signdesc1, ST_AsGeoJSON(geom) as geom FROM signs WHERE geom && ST_MakeEnvelope(${ bounds._southWest.lng }, ${ bounds._southWest.lat }, ${ bounds._northEast.lng }, ${ bounds._northEast.lat }, 4326) ORDER BY CAST(sg_seqno_n AS INTEGER);`;
 

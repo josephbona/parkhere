@@ -1,5 +1,6 @@
 let privatel = {
-  templateUrl: './private-list.html'
+  templateUrl: './private-list.html',
+  controller: 'PrivateListController'
 }
 
 angular

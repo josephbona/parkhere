@@ -1,31 +1,34 @@
 <ion-content class="has-header has-tabs-top">
-  <div class="list">
+  <form name="form" class="list" ng-submit="$ctrl.submitListing()">
     <label class="item item-input item-stacked-label">
     <span class="input-label">Address</span>
-    <input type="text" placeholder="John">
+    <input type="text" placeholder="John" ng-model="$ctrl.newListing.address" required>
   </label>
   <label class="item item-input item-stacked-label">
     <span class="input-label">City</span>
-    <input type="text" placeholder="New York">
+    <input type="text" placeholder="New York" ng-model="$ctrl.newListing.city" required>
   </label>
     <label class="item item-input item-stacked-label">
     <span class="input-label">Price</span>
-    <input type="text" placeholder="Doe">
+    <input type="text" placeholder="100" ng-model="$ctrl.newListing.price" required>
   </label>
     <label class="item item-input item-stacked-label">
-    <span class="input-label">Period</span>
-    <input type="text">
+    <span class="input-label">Listing End</span>
+    <input type="text" placeholder="2015-01-16" ng-model="$ctrl.newListing.listingEnd" required>
   </label>
   <label class="item item-input item-stacked-label">
     <span class="input-label">Amenities</span>
-    <input type="text">
+    <ion-toggle ng-repeat="amenity in $ctrl.amenities" ng-model="amenity.checked" ng-checked="item.checked">
+      {{ amenity.text }}
+    </ion-toggle>
   </label>
    <label class="item item-input item-stacked-label">
     <span class="input-label">Description</span>
-    <input type="text">
+    <input type="text-box" ng-model="$ctrl.newListing.description">
   </label>
   </div>
   <div class="padding">
-    <button class="button button-block button-positive activated">Create a Listing</button>
-  </div>
+    <input type="submit" class="button button-block button-positive activated" id="submit" value="Create a Listing">
+    <button ui-sref="privatePrompt" class="button button-block button-positive activated">Cancel</button>
+  </form>
 </ion-content>
