@@ -37,7 +37,6 @@ function StreetController(NgMap, StreetService, $rootScope) {
   }
 
   ctrl.dragStart = function(event) {
-    google.maps.event.trigger(ctrl.map, 'resize');
 
     StreetService.clearShapes(ctrl.map);
     ctrl.paths = [];
@@ -47,6 +46,8 @@ function StreetController(NgMap, StreetService, $rootScope) {
     if (!ctrl.map) {
       return
     }
+    google.maps.event.trigger(ctrl.map, 'resize');
+    
     let bounds = StreetService.getBounds(ctrl.map);
     console.log(bounds);
     StreetService.requestPoints(bounds)

@@ -27,6 +27,8 @@ function PrivateController(NgMap, PrivateService, $ionicModal, $scope, $statePar
     if (!ctrl.map) {
       return
     }
+    google.maps.event.trigger(ctrl.map, 'resize');
+    
     let bounds = PrivateService.getBounds(ctrl.map);
     PrivateService.requestPoints(bounds)
       .then(function(results) {
@@ -35,7 +37,6 @@ function PrivateController(NgMap, PrivateService, $ionicModal, $scope, $statePar
   }
 
   ctrl.dragStart = function(event) {
-    google.maps.event.trigger(ctrl.map, 'resize');
   }
 
   ctrl.dragend = function(event) {
