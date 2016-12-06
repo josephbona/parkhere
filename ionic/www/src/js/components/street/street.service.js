@@ -1,10 +1,15 @@
 function StreetService($http) {
+  let colors = {
+    red: '#F05445',
+    green: '#42C956',
+    yellow: '#FFC400'
+  }
   let blocks = {};
   let segments = []
   // let adminEnabled = true;
 
   this.requestPoints = function(bounds) {
-    
+
     return $http.post('https://wjl-park-here.herokuapp.com/api/street/points', bounds)
       .then(function(results) {
         parseResponse(results.data);
@@ -111,13 +116,13 @@ function StreetService($http) {
         var pToN = pointsToNeighbor(point, neighbors[n]);
         // if it does, draw a line between the point and the neighbor
         if (pToN) {
-          var color = getColor(point) || '#00FF00';
+          var color = getColor(point) || colors.green;
           segments.push({
             segment: [
               {
-                lat: point.lat, 
+                lat: point.lat,
                 lng: point.lng
-              }, { 
+              }, {
                 lat: neighbors[n].lat,
                 lng: neighbors[n].lng
               }],
@@ -182,26 +187,26 @@ function StreetService($http) {
   // returns the color to draw based on the point's regulation type, schedule and the current
   // day and time
   function getColor(point) {
-    var defaultColor = '#00FF00';
+    var defaultColor = colors.green;
     var effectiveColor;
     switch (point.type) {
       case "NO PARKING":
-        effectiveColor = '#FF0000';
+        effectiveColor = colors.red;
         break;
       case "NO STANDING":
-        effectiveColor = '#FF0000';
+        effectiveColor = colors.red;
         break;
       case "STREET CLEANING":
-        effectiveColor = '#FF0000';
+        effectiveColor = colors.red;
         break;
       case "NO STOPPING":
-        effectiveColor = '#FF0000';
+        effectiveColor = colors.red;
         break;
       case "BUS STOP":
-        effectiveColor = '#FF0000';
+        effectiveColor = colors.red;
         break;
       case "METER":
-        effectiveColor = '#0000FF';
+        effectiveColor = colors.yellow;
         break;
     }
     var days = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
