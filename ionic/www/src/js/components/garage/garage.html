@@ -17,8 +17,8 @@
         on-click="$ctrl.openModal()">
       </marker>
     </ng-map>
-    <img ng-click="$ctrl.setCenter(event)" class="locate" src="images/locate.png" alt="">
   </div>
+  <a ui-sref="street({latlng: '', zoom: 16})"><img class="locate" src="images/locate.png" alt=""></a>
 </ion-content>
 <script id="templates/modal.html" type="text/ng-template">
   <ion-modal-view>

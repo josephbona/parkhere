@@ -10,7 +10,7 @@ angular
     $stateProvider
       .state('street', {
         parent: 'app',
-        url: '/street',
+        url: '/street?latlng&zoom',
         template: '<street></street>'
       });
   });

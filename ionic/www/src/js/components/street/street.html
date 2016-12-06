@@ -2,18 +2,14 @@
   <div class="map">
     <ng-map
       id="street-map"
-      center="[40.7626668, -73.9176167]"
-      geo-fallback-center="[40.7626668, -73.9176167]"
-      zoom="20"
+      center="{{$ctrl.center}}"
+      zoom="{{$ctrl.zoom}}"
+      styles="{{$ctrl.mapStyles}}"
       disable-default-u-i="true"
       clickableIcons="false"
       on-dragstart="$ctrl.dragStart()"
-      on-dragend="$ctrl.onBoundsChanged()"
+      on-bounds-changed="$ctrl.onBoundsChanged()"
       >
-<!--       on-zoom_changed="$ctrl.onBoundsChanged()"
-      on-center-changed="$ctrl.onBoundsChanged()" -->
-      <!-- on-bounds-changed="$ctrl.onBoundsChanged()"> -->
-
       <shape ng-repeat="path in $ctrl.paths track by $index" id="marker-{{$index}}" name="polyline" id="foo"
       path="{{ path.segment }}"
       stroke-color="{{path.color}}"
@@ -22,6 +18,6 @@
       on-click="$ctrl.onSegClick()">
       </shape>
     </ng-map>
-    <img ng-click="$ctrl.setCenter(event)" class="locate" src="images/locate.png" alt="">
   </div>
+  <a ui-sref="street({latlng: '', zoom: 16})"><img class="locate" src="images/locate.png" alt=""></a>
 </ion-content>

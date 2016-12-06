@@ -1,25 +1,17 @@
-function StreetController(NgMap, StreetService, $rootScope) {
+function StreetController(NgMap, StreetService, $ionicLoading, $stateParams) {
   const ctrl = this;
-
-  ctrl.log = function(event) {
-    var args = [].slice.call(arguments).slice(1);
-    args.forEach(function(arg) {
-      console.log(arg)
-    });
-  };
-
-  ctrl.onSegClick = function(event) {
-    console.log(ctrl.map.shapes);
-    for (var shape in ctrl.map.shapes) {
-      ctrl.map.shapes[shape].setOptions({
-        strokeWeight: 3
-      });
-    }
-    this.setOptions({
-      strokeWeight: 10
-    });
+  var loadingOptions = {
+    content: 'Loading'
   }
-
+  ctrl.mapStyles = [{
+    featureType: "poi",
+    elementType: "labels",
+    stylers: [{
+      visibility: "off"
+    }]
+  }];
+  ctrl.center = $stateParams.latlng ? $stateParams.latlng.split('_') : 'current-position';
+  ctrl.zoom = $stateParams.zoom ? Number($stateParams.zoom) : 16;
   ctrl.$onInit = function() {
     NgMap.getMap("street-map")
       .then(function(map) {
@@ -31,36 +23,43 @@ function StreetController(NgMap, StreetService, $rootScope) {
           });
       });
   }
-
+  ctrl.log = function(event) {
+    var args = [].slice.call(arguments).slice(1);
+    args.forEach(function(arg) {
+      console.log(arg)
+    });
+  };
+  ctrl.onSegClick = function(event) {
+    console.log(ctrl.map.shapes);
+    for (var shape in ctrl.map.shapes) {
+      ctrl.map.shapes[shape].setOptions({
+        strokeWeight: 3
+      });
+    }
+    this.setOptions({
+      strokeWeight: 10
+    });
+  }
   ctrl.setCenter = function(event) {
     ctrl.map.setCenter(event.latLng);
   }
-
-  ctrl.dragStart = function(event) {
-
+  ctrl.onBoundsChanged = function(event) {
     StreetService.clearShapes(ctrl.map);
     ctrl.paths = [];
-  };
-
-  ctrl.onBoundsChanged = function(event) {
-    if (!ctrl.map) {
-      return
-    }
-    google.maps.event.trigger(ctrl.map, 'resize');
-    
     let bounds = StreetService.getBounds(ctrl.map);
-    console.log(bounds);
-    StreetService.requestPoints(bounds)
-      .then(function(paths) {
-        ctrl.paths = paths;
-      });
+    var zoom = ctrl.map.getZoom();
+    if (zoom >= 16) {
+      $ionicLoading.show({});
+      StreetService.requestPoints(bounds)
+        .then(function(paths) {
+          ctrl.paths = paths;
+          $ionicLoading.hide();
+        });
+    }
   }
-
   ctrl.dragEnd = function(event) {
-
+    // do something on dragEnd
   }
-
-
 }
 
 angular
