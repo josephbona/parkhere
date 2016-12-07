@@ -12,7 +12,7 @@ function StreetController(NgMap, StreetService, $ionicLoading, $scope, $ionicMod
   }];
   var fsa = "[40.7626668, -73.9176167]";
   ctrl.center = $stateParams.latlng ? $stateParams.latlng.split('_') : fsa;
-  ctrl.zoom = $stateParams.zoom ? Number($stateParams.zoom) : 16;
+  ctrl.zoom = $stateParams.zoom ? Number($stateParams.zoom) : 17;
   ctrl.$onInit = function() {
     NgMap.getMap("street-map")
       .then(function(map) {
