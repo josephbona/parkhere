@@ -1,15 +1,15 @@
-var privatep = {
+var privatePrompt = {
   templateUrl: './private-prompt.html',
 };
 
 angular
   .module('components.private')
-  .component('privatep', privatep)
+  .component('privatePrompt', privatePrompt)
   .config(function($stateProvider) {
     $stateProvider
       .state('privatePrompt', {
         parent: 'app',
         url: '/private/prompt',
-        template: '<privatep></privatep>'
+        template: '<private-prompt></private-prompt>'
       })
   });

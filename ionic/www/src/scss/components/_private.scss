@@ -1,0 +1,16 @@
+private-prompt {
+  background: url(../images/map.png) no-repeat center #FFF;
+  background-size: cover;
+  .page-title {
+    margin-top: 65px;
+  }
+}
+.page-title {
+  text-align: center;
+  margin-top: 25px;
+  margin-bottom: 20px;
+  h2 {
+    color: $positive;
+    margin: 0 0 5px;
+  }
+}
