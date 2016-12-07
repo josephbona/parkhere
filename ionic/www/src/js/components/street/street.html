@@ -22,7 +22,7 @@
   <a ui-sref="street({latlng: '', zoom: 16})"><img class="locate" src="images/locate.png" alt=""></a>
 </ion-content>
 <script id="templates/streetmodal.html" type="text/ng-template">
-  <ion-modal-view>
+  <ion-modal-view class="streetmodal">
     <ion-header-bar class="bar bar-header" ng-style="{'background-color': $ctrl.selectedResult.color}" >
       <h1 class="title">{{$ctrl.selectedResult.color === "#42C956"? "PARKING ALLOWED ": $ctrl.selectedResult.color === "#FFC400"? "METERED PARKING": "NO PARKING"}} </h1>
       <button class="button button-clear button-icon icon ion-ios-close-empty" ng-click="$ctrl.closeModal()"></button>

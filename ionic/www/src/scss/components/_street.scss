@@ -1,0 +1,13 @@
+.streetmodal {
+  h1 {
+    color: white !important;
+    font-size: 20px !important;
+    font-weight: 900 !important;
+  }
+  &.slide-in-up.ng-enter-active,
+  &.slide-in-up>.ng-enter-active {
+    transform: translate3d(0,611px,0);
+  }
+  .ion-header-bar {
+  }
+}
