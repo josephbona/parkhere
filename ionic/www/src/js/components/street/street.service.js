@@ -217,8 +217,8 @@ function StreetService($http) {
         break;
     }
     var days = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
-    // var today = new Date();
-    var today = new Date(2016, 11, 26, 9, 45);
+    var today = new Date();
+    // var today = new Date(2016, 11, 26, 9, 45);
     var dayOfWeek = days[today.getDay()];
     if (!point.schedule || !point.schedule[dayOfWeek].length)
       return defaultColor;
