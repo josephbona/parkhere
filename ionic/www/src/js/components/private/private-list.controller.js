@@ -1,5 +1,25 @@
-function PrivateListController(PrivateListService) {
+function PrivateListController(PrivateListService, $scope, $ionicSlideBoxDelegate) {
   let ctrl = this;
+  ctrl.options = {
+    loop: false,
+    effect: 'fade',
+    speed: 500,
+  }
+
+  $scope.$on("$ionicSlides.sliderInitialized", function(event, data){
+    // data.slider is the instance of Swiper
+    ctrl.slider = data.slider;
+  });
+
+  $scope.$on("$ionicSlides.slideChangeStart", function(event, data){
+    console.log('Slide change is beginning');
+  });
+
+  $scope.$on("$ionicSlides.slideChangeEnd", function(event, data){
+    // note: the indexes are 0-based
+    ctrl.activeIndex = data.slider.activeIndex;
+    ctrl.previousIndex = data.slider.previousIndex;
+  });
 
   ctrl.amenities = [
     {
