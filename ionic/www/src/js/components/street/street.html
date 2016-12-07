@@ -7,10 +7,10 @@
       styles="{{$ctrl.mapStyles}}"
       disable-default-u-i="true"
       clickableIcons="false"
-      on-dragstart="$ctrl.dragStart()"
-      on-bounds-changed="$ctrl.onBoundsChanged()"
+      on-dragend="$ctrl.onBoundsChanged()"
       >
       <shape ng-repeat="path in $ctrl.paths track by $index" id="marker-{{$index}}" name="polyline" id="foo"
+      data="{{path}}"
       path="{{ path.segment }}"
       stroke-color="{{path.color}}"
       stroke-opacity="1.0"
@@ -21,3 +21,16 @@
   </div>
   <a ui-sref="street({latlng: '', zoom: 16})"><img class="locate" src="images/locate.png" alt=""></a>
 </ion-content>
+<script id="templates/streetmodal.html" type="text/ng-template">
+  <ion-modal-view>
+    <ion-header-bar class="bar bar-header" ng-style="{'background-color': $ctrl.selectedResult.color}" >
+      <h1 class="title">{{$ctrl.selectedResult.color === "#42C956"? "PARKING ALLOWED ": $ctrl.selectedResult.color === "#FFC400"? "METERED PARKING": "NO PARKING"}} </h1>
+      <button class="button button-clear button-icon icon ion-ios-close-empty" ng-click="$ctrl.closeModal()"></button>
+    </ion-header-bar>
+    <ion-content class="padding">
+      <div>
+      <h4>{{$ctrl.selectedResult.until? $ctrl.selectedResult.type + " UNTIL " + $ctrl.selectedResult.until: ""}}</h4>
+      </div>
+    </ion-content>
+  </ion-modal-view>
+</script>
