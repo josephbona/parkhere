@@ -39,7 +39,6 @@ function StreetService($http) {
   }
 
   this.clearShapes = function(map){
-    angular.copy({}, blocks);
     angular.copy([], segments);
 
     if (map.shapes){
