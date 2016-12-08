@@ -4,13 +4,13 @@ function StreetService($http) {
     green: '#42C956',
     yellow: '#FFC400'
   }
-  let blocks = {};
+  // let blocks = {};
   let segments = []
   // let adminEnabled = true;
 
   this.requestPoints = function(bounds) {
-
-    return $http.post('https://wjl-park-here.herokuapp.com/api/street/points', bounds)
+    //https://wjl-park-here.herokuapp.com/api/street/points
+    return $http.post('http://localhost:3000/api/street/points', bounds)
       .then(function(results) {
         parseResponse(results.data);
         console.log(segments);
@@ -51,9 +51,7 @@ function StreetService($http) {
     }
   }
 
-  function parseResponse(data, map) {
-
-    data.features.forEach(createBlocks);
+  function parseResponse(blocks, map) {
 
     // compare function for sorting by block sequence number
     function compare(a, b) {
@@ -69,23 +67,7 @@ function StreetService($http) {
       getColoredLines(blocks[blockId]);
     }
   }
-  // group blocks by block identifier, store data for each point on block
-  function createBlocks(feature) {
-    var blockId = feature.sg_order_n;
-
-    if (!blocks[blockId])
-      blocks[blockId] = [];
-
-    blocks[blockId].push({
-      lat: feature.geometry.coordinates[1],
-      lng: feature.geometry.coordinates[0],
-      arrow: [feature.arrow],
-      type: feature.regType,
-      signdesc: feature.signdesc,
-      schedule: feature.schedule
-    });
-  }
-
+  
   function getColoredLines(pointList) {
     var defaultArrow = getDefaultArrow(pointList);
     if (!defaultArrow) {

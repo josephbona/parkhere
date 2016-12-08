@@ -1,6 +1,8 @@
 const pgp = require('pg-promise')();
 const parse = require('./parse').parse;
-const { credentials } = require('../credentials');
+const {
+  credentials
+} = require('../credentials');
 let db;
 
 function connect() {
@@ -23,7 +25,7 @@ module.exports = {
     const sql = `SELECT *, ST_ASGeoJSON(geom) as geom from listings WHERE geom && ST_MakeEnvelope(${ bounds._southWest.lng }, ${ bounds._southWest.lat }, ${ bounds._northEast.lng }, ${ bounds._northEast.lat }, 4326);`;
     connect();
     return db.many(sql)
-      .then(results => {        
+      .then(results => {
         results.forEach((result) => {
           result.geom = JSON.parse(result.geom);
           result.geom.coordinates.reverse();
@@ -36,7 +38,7 @@ module.exports = {
     const sql = `INSERT INTO listings (renter_email, rentee_email, price, period, active, amenities, pics, address, city, description, geom) VALUES ('${newListing.renterEmail }', '', '${newListing.price }', '${newListing.listingEnd }', 1, '${ JSON.stringify(newListing.amenities) }', '', '${newListing.address }', '${newListing.city }' ,'${ newListing.description }', ST_GeomFromTexT('POINT(${ newListing.geom.lng } ${newListing.geom.lat })', 4326));`;
     connect();
     return db.one(sql)
-      .then(results => {        
+      .then(results => {
         results.forEach((result) => {
           result.geom = JSON.parse(result.geom);
           result.geom.coordinates.reverse();
@@ -52,27 +54,52 @@ module.exports = {
     connect();
     return db.many(sql)
       .then(results => {
+        // const featureCollection = new FeatureCollection();
 
-        const featureCollection = new FeatureCollection();
+        // results.forEach((result) => {
+        //   let feature = {};
+        //   feature.type = 'Feature';
+        //   feature.geometry = JSON.parse(result.geom);
+        //   feature.objectid = result.objectid;
+        //   feature.sg_order_n = result.sg_order_n;
+        //   feature.seqno = result.seqno;
+        //   feature.signdesc = result.signdesc1;
+        //   feature.arrow = result.arrow || null;
+        //   let p = parse(feature.signdesc);
+        //   feature.regType = p.type;
+        //   if (p.type === "UNKNOWN" || p.type === "BUS INFO")
+        //     return;
+        //   feature.schedule = p.schedule;
+        //   featureCollection.features.push(feature);
+        // });
+        let blocks = {};
 
-        results.forEach((result) => {
-          let feature = {};
-          feature.type = 'Feature';
-          feature.geometry = JSON.parse(result.geom);
-          feature.objectid = result.objectid;
-          feature.sg_order_n = result.sg_order_n;
-          feature.seqno = result.seqno;
-          feature.signdesc = result.signdesc1;
-          feature.arrow = result.arrow || null;
-          let p = parse(feature.signdesc);
-          feature.regType = p.type;
+        results.forEach(result => {
+
+          let blockId = result.sg_order_n;
+
+          if (!blocks[blockId])
+            blocks[blockId] = [];
+
+          let p = parse(result.signdesc1);
+          result.regType = p.type;
           if (p.type === "UNKNOWN" || p.type === "BUS INFO")
             return;
-          feature.schedule = p.schedule;
-          featureCollection.features.push(feature);
+          result.schedule = p.schedule;
+
+          blocks[blockId].push({
+            objectid: result.objectid,
+            lat: JSON.parse(result.geom).coordinates[1],
+            lng: JSON.parse(result.geom).coordinates[0],
+            arrow: [result.arrow] || null,
+            seqno: result.seqno,
+            type: result.regType,
+            signdesc: result.signdesc1,
+            schedule: result.schedule
+          });
         });
 
-        return featureCollection;
+        return blocks;
       })
       .catch(error => console.log(error));
 
