@@ -9,11 +9,12 @@ function requestPoints(bounds, map) {
 
   $.ajax({
     type: 'POST',
-    url: '/api/street/points',
+    url: 'http://ec2-54-209-72-21.compute-1.amazonaws.com/api/street/points',
     dataType: 'json',
     data: JSON.stringify(bounds),
     contentType: 'application/json; charset=utf-8',
     success: function(result) {
+      console.log(result);
       parseResponse(result, map);
     },
     error: function(req, status, error) {
@@ -22,45 +23,50 @@ function requestPoints(bounds, map) {
   });
 }
 
-function parseResponse(data, map) {
+function FeatureCollection() {
+  this.type = 'FeatureCollection';
+  this.features = new Array();
+}
 
-  data.features.forEach(createBlocks);
+function parseResponse(blocks, map) {
 
-  // compare function for sorting by block sequence number
-  function compare(a, b) {
-    if (a.seqno < b.seqno)
-      return -1;
-    if (a.seqno > b.seqno)
-      return 1;
-    return 0;
-  }
+  var featureCollection = new FeatureCollection();
 
   for (var blockId in blocks) {
-    blocks[blockId].sort(compare);
+    blocks[blockId].map(function(sign){
+      let feature = {};
+      feature.type = 'Feature';
+      feature.geometry = {
+        type: 'Point',
+        coordinates: [sign.lng, sign.lat]
+      };
+      feature.properties = {
+        objectid: sign.objectid,
+        seqno: sign.seqno,
+        signdesc: sign.signdesc,
+        signType: sign.type
+      };
+      featureCollection.features.push(feature);
+    });
     colorDrawLine(blocks[blockId], map);
   }
-
-
-
-  map.data.addGeoJson(data);
-}
-
-// group blocks by block identifier, store data for each point on block
-function createBlocks(feature) {
-  var blockId = feature.sg_order_n;
-
-  if (!blocks[blockId])
-    blocks[blockId] = [];
-
-  blocks[blockId].push({
-    lat: feature.geometry.coordinates[1],
-    lng: feature.geometry.coordinates[0],
-    arrow: [feature.arrow],
-    type: feature.regType,
-    signdesc: feature.signdesc,
-    schedule: feature.schedule
+  console.log(featureCollection);
+  var infowindow = new google.maps.InfoWindow();
+  // When the user clicks, open an infowindow
+  map.data.addListener('click', function(event) {
+          var myHTML = event.feature.getProperty("objectid");
+      infowindow.setContent("<div style='width:150px; text-align: center;'>"+myHTML+"</div>");
+          infowindow.setPosition(event.feature.getGeometry().get());
+      infowindow.setOptions({pixelOffset: new google.maps.Size(0,-30)});
+          infowindow.open(map);
   });
+  map.data.forEach(function(feature) {
+       //filter...
+        map.data.remove(feature);
+});  
+  map.data.addGeoJson(featureCollection);
 }
+
 
 function colorDrawLine(pointList, map) {
   var defaultArrow = getDefaultArrow(pointList);
