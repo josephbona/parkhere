@@ -9,8 +9,7 @@ function StreetService($http) {
   // let adminEnabled = true;
 
   this.requestPoints = function(bounds) {
-    //https://wjl-park-here.herokuapp.com/api/street/points
-    return $http.post('http://localhost:3000/api/street/points', bounds)
+    return $http.post('http://ec2-54-209-72-21.compute-1.amazonaws.com/api/street/points', bounds)
       .then(function(results) {
         parseResponse(results.data);
         console.log(segments);
