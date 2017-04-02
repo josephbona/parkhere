@@ -17,6 +17,7 @@ function StreetController(NgMap, StreetService, $ionicLoading, $scope, $ionicMod
     NgMap.getMap("street-map")
       .then(function(map) {
         ctrl.map = map;
+        console.log(map);
         let bounds = StreetService.getBounds(ctrl.map);
         return StreetService.requestPoints(bounds);
       })
@@ -62,7 +63,6 @@ function StreetController(NgMap, StreetService, $ionicLoading, $scope, $ionicMod
   }
 
   ctrl.onBoundsChanged = function(event) {
-    console.log("bound changed");
     StreetService.clearShapes(ctrl.map);
     ctrl.paths = [];
     let bounds = StreetService.getBounds(ctrl.map);

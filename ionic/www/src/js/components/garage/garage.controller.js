@@ -7,8 +7,7 @@ function GarageController(NgMap, GarageService, $ionicModal, $scope, $ionicLoadi
       visibility: "off"
     }]
   }];
-  var fsa = "[40.7626668, -73.9176167]";
-  ctrl.center = $stateParams.latlng ? $stateParams.latlng.split('_') : fsa;
+  ctrl.center = $stateParams.latlng ? $stateParams.latlng.split('_') : 'current-position';
   ctrl.zoom = $stateParams.zoom ? Number($stateParams.zoom) : 15;
   ctrl.$onInit = function () {
     NgMap.getMap("garage-map")
@@ -37,12 +36,14 @@ function GarageController(NgMap, GarageService, $ionicModal, $scope, $ionicLoadi
     ctrl.selectedResult = this.data;
     ctrl.selectedResult.start_formatted = moment.unix(ctrl.selectedResult.start).format('ddd LT');
     ctrl.selectedResult.end_formatted = moment.unix(ctrl.selectedResult.end).format('ddd LT');
+    console.log(ctrl.selectedResult);
     ctrl.modal.show();
   }
   ctrl.closeModal = function() {
     ctrl.modal.hide();
   }
   ctrl.search = function(event) {
+    console.log("searching...");
     ctrl.results = null;
     var center = ctrl.map.getCenter().toJSON();
     var zoom = ctrl.map.getZoom();
@@ -50,6 +51,7 @@ function GarageController(NgMap, GarageService, $ionicModal, $scope, $ionicLoadi
       $ionicLoading.show({});
       GarageService.search(center).then(function(results) {
         ctrl.results = results.data.parking_listings;
+        console.log(ctrl.results);
         $ionicLoading.hide();
       })
     }

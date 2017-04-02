@@ -10,5 +10,3 @@ ionic/www/js
 ionic/www/lib
 
 server/credentials.js
-
-server/npm-debug.log
