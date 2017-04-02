@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "start:dev": "PORT=3000 DATABASE_URL=postgres://localhost:5432/park_test nodemon server.js"
+    "start:dev": "PORT=3000 DATABASE_URL=postgres://gsldctxqxqetap:XsLlj1kKCMHBax2FtCKmgSTHbH@ec2-23-23-111-171.compute-1.amazonaws.com:5432/d8fa0d5chm2nt7 nodemon server.js"
   },
   "author": "",
   "license": "ISC",

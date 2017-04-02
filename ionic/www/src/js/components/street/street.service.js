@@ -4,14 +4,15 @@ function StreetService($http) {
     green: '#42C956',
     yellow: '#FFC400'
   }
-  let blocks = {};
+  // let blocks = {};
   let segments = []
   // let adminEnabled = true;
 
   this.requestPoints = function(bounds) {
-    return $http.post('http://localhost:3000/api/street/points', bounds)
+    return $http.post('http://ec2-54-209-72-21.compute-1.amazonaws.com/api/street/points', bounds)
       .then(function(results) {
         parseResponse(results.data);
+        console.log(segments);
         return segments;
       })
       .catch(function(error) {
@@ -37,7 +38,6 @@ function StreetService($http) {
   }
 
   this.clearShapes = function(map){
-    angular.copy({}, blocks);
     angular.copy([], segments);
 
     if (map.shapes){
@@ -49,8 +49,7 @@ function StreetService($http) {
     }
   }
 
-  function parseResponse(data) {
-    data.features.forEach(createBlocks);
+  function parseResponse(blocks, map) {
 
     // compare function for sorting by block sequence number
     function compare(a, b) {
@@ -65,20 +64,6 @@ function StreetService($http) {
       blocks[blockId].sort(compare);
       getColoredLines(blocks[blockId]);
     }
-  }
-
-  function createBlocks(feature) {
-    var blockId = feature.sg_order_n;
-
-    if (!blocks[blockId]) blocks[blockId] = [];
-    blocks[blockId].push({
-      lat: feature.geometry.coordinates[1],
-      lng: feature.geometry.coordinates[0],
-      arrow: [feature.arrow],
-      type: feature.regType,
-      signdesc: feature.signdesc,
-      schedule: feature.schedule
-    })
   }
   
   function getColoredLines(pointList) {
