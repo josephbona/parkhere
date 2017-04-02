@@ -50,7 +50,6 @@ function StreetService($http) {
   }
 
   function parseResponse(data) {
-    console.log("data is ", data);
     data.features.forEach(createBlocks);
 
     // compare function for sorting by block sequence number
